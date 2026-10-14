@@ -1,0 +1,166 @@
+<title>Catastro Caminos de Montaña — Fase 1</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F3F4F1; --surface:#FFFFFF; --ink:#1C232B; --ink-2:#4A545E; --ink-3:#7A848D;
+  --rule:#D3D8D4; --accent:#3B5B7E; --accent-soft:#E3EAF2; --amber:#A67C2E; --amber-soft:#F4EBD6;
+  --green:#3A7A5A; --green-soft:#DCEDE3; --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --sans:"IBM Plex Sans",system-ui,Segoe UI,Arial,sans-serif; --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#151A20; --surface:#1D242C; --ink:#E6E9EB; --ink-2:#B4BCC4; --ink-3:#7F8993;
+  --rule:#323B45; --accent:#8FB0D6; --accent-soft:#25344A; --amber:#D4A84E; --amber-soft:#3A3120;
+  --green:#7CC29A; --green-soft:#1F3A2C; } }
+:root[data-theme="dark"]{
+  --bg:#151A20; --surface:#1D242C; --ink:#E6E9EB; --ink-2:#B4BCC4; --ink-3:#7F8993;
+  --rule:#323B45; --accent:#8FB0D6; --accent-soft:#25344A; --amber:#D4A84E; --amber-soft:#3A3120;
+  --green:#7CC29A; --green-soft:#1F3A2C; }
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55}
+main{max-width:76ch;margin:0 auto;padding:3.5rem 1.5rem 5rem}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem}
+h1{font-family:var(--serif);font-weight:600;font-size:2.4rem;line-height:1.1;margin:0 0 .5rem;text-wrap:balance}
+.lede{color:var(--ink-2);margin:0 0 2rem;max-width:62ch}
+h2{font-family:var(--serif);font-weight:600;font-size:1.45rem;margin:3rem 0 .8rem;padding-top:1.2rem;border-top:1px solid var(--rule);text-wrap:balance}
+h3{font-size:1rem;font-weight:600;margin:1.6rem 0 .5rem}
+p{margin:0 0 1rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.75rem;margin:0 0 1rem}
+.stat{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:.9rem 1rem}
+.stat b{display:block;font-family:var(--mono);font-size:1.6rem;font-weight:500;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat span{display:block;font-size:.8rem;color:var(--ink-2);margin-top:.3rem}
+.stat.null b{color:var(--amber)}
+.tablewrap{overflow-x:auto;margin:0 0 1.2rem}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+td.n,th.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:.1rem .5rem;border-radius:3px;line-height:1.5}
+.ok{background:var(--green-soft);color:var(--green)} .warn{background:var(--amber-soft);color:var(--amber)} .off{background:var(--accent-soft);color:var(--accent)}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);padding:.05em .35em;border-radius:3px}
+pre{font-family:var(--mono);font-size:.84rem;background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:.9rem 1rem;overflow-x:auto;line-height:1.5}
+ul{padding-left:1.2rem;margin:0 0 1rem} li{margin:.25rem 0}
+.note{border-left:3px solid var(--amber);background:var(--amber-soft);padding:.7rem 1rem;border-radius:0 4px 4px 0;margin:1rem 0}
+.foot{margin-top:3rem;color:var(--ink-3);font-size:.82rem;border-top:1px solid var(--rule);padding-top:1rem}
+</style>
+<main>
+<p class="eyebrow">FONDEF IDeA · Base nacional de caminos de montaña · Fase 1</p>
+<h1>Informe de construcción del catastro</h1>
+<p class="lede">Ejecución del 26 de agosto de 2026. Orquestador y subagentes A1–A5 y A7, bajo las seis reglas de <code>REGLAS.md</code>. Toda cifra sale de <code>logs/</code> y de <code>tests/run.R</code>; ninguna se completó a mano.</p>
+
+<div class="stats">
+  <div class="stat"><b>18.368</b><span>tramos en la base</span></div>
+  <div class="stat"><b>6.250</b><span>caminos con rol identificable</span></div>
+  <div class="stat"><b>108</b><span>aserciones PASS · 0 FAIL</span></div>
+  <div class="stat null"><b>99.351</b><span>celdas NULL con motivo</span></div>
+</div>
+
+<h2>1. Tramos derivados</h2>
+<ul>
+  <li><b>Red Vial (FT-01)</b>: 14.003 registros crudos en 16 regiones (765 MB Esri JSON, sha256 en <code>data/raw/manifest.json</code>). 58 excluidos por Isla de Pascua. Tramos A1: 13.945.</li>
+  <li><b>Segmentación (A2)</b>: 1.499 tramos cortados por comuna en 5.922 hijos; 12.446 sin cortar → <b>18.368 tramos</b>.</li>
+  <li><b>Altimetría (A3)</b>, Copernicus GLO-30 leído como COG: 0 NULL en cotas; 3,06 M de puntos en 113 teselas. <code>cruza_portezuelo</code>: 232. Contraste con el Z de Vialidad: mediana |Δ| 0,4 m, p95 20,8 m, 163 tramos con |Δ| &gt; 50 m; 2.215 sin contraste (Z = 0 en la capa).</li>
+  <li><b>Destinos (A4)</b>: 50 tramos con paso fronterizo (43 vehiculares, 7 no vehiculares, conservados con <code>paso_trafico</code> literal); 43 pasos distintos. 16 tramos de acceso a 12 centros de esquí. 9.290 tramos tocan una localidad; distancia a servicios (CIUDAD + PUEBLO INE) mediana 5,8 km, máx 179 km. 2.783 en zona fronteriza (método <code>estimado</code>).</li>
+  <li><b>Tránsito (A5)</b>: <code>tmda</code> en 1.850 tramos (10,1 %), 1.366 con muestra de junio. Distancia mediana al punto censal 4,8 km; 3.761 tramos a más de 10 km.</li>
+</ul>
+
+<div class="tablewrap"><table>
+<tr><th>Clase Kapos</th><th class="n">0</th><th class="n">1</th><th class="n">2</th><th class="n">3</th><th class="n">4</th><th class="n">5</th><th class="n">6</th><th class="n">7</th></tr>
+<tr><td>Tramos</td><td class="n">11.101</td><td class="n">62</td><td class="n">216</td><td class="n">181</td><td class="n">216</td><td class="n">645</td><td class="n">5.947</td><td class="n">no derivable</td></tr>
+</table></div>
+
+<h3>Conteo informativo del nivel geomorfológico</h3>
+<p>No es el corte definitivo: la base etiqueta, no filtra. Con <code>clase_kapos</code> 1–5 o portezuelo: <b>1.458 tramos, 22.073 km, 643 caminos</b> con rol (218 tramos sin rol). Con <code>cota_max ≥ 1.500 m</code>: 738 tramos, 305 caminos.</p>
+<div class="tablewrap"><table>
+<tr><th>Región</th><th class="n">Tramos</th><th class="n">km</th><th class="n">Caminos</th></tr>
+<tr><td>Atacama</td><td class="n">296</td><td class="n">4.530</td><td class="n">151</td></tr>
+<tr><td>Tarapacá</td><td class="n">227</td><td class="n">3.079</td><td class="n">82</td></tr>
+<tr><td>Antofagasta</td><td class="n">209</td><td class="n">4.750</td><td class="n">61</td></tr>
+<tr><td>Coquimbo</td><td class="n">188</td><td class="n">2.098</td><td class="n">92</td></tr>
+<tr><td>La Araucanía</td><td class="n">145</td><td class="n">1.419</td><td class="n">38</td></tr>
+<tr><td>Arica y Parinacota</td><td class="n">117</td><td class="n">1.952</td><td class="n">60</td></tr>
+<tr><td>Valparaíso</td><td class="n">66</td><td class="n">404</td><td class="n">39</td></tr>
+<tr><td>Metropolitana</td><td class="n">64</td><td class="n">371</td><td class="n">22</td></tr>
+<tr><td>Maule</td><td class="n">31</td><td class="n">561</td><td class="n">19</td></tr>
+<tr><td>Biobío</td><td class="n">29</td><td class="n">642</td><td class="n">22</td></tr>
+<tr><td>Los Ríos</td><td class="n">20</td><td class="n">332</td><td class="n">18</td></tr>
+<tr><td>Aysén</td><td class="n">19</td><td class="n">714</td><td class="n">15</td></tr>
+<tr><td>O'Higgins</td><td class="n">16</td><td class="n">152</td><td class="n">7</td></tr>
+<tr><td>Los Lagos</td><td class="n">15</td><td class="n">459</td><td class="n">13</td></tr>
+<tr><td>Ñuble</td><td class="n">10</td><td class="n">187</td><td class="n">6</td></tr>
+<tr><td>Magallanes</td><td class="n">6</td><td class="n">423</td><td class="n">6</td></tr>
+</table></div>
+
+<h2>2. Lista del colega (Regla 6)</h2>
+<p><code>reference/candidatos_colega.xlsx</code> <b>no existe en el repositorio</b>. Candidatos confirmados: 0. No aparecidos: 0 (no evaluable). <code>en_lista_colega</code> es NULL en las 18.368 filas. Cuando el archivo se agregue, el contraste corre sobre <code>data/processed/tramos.parquet</code> sin rehacer ninguna etapa.</p>
+
+<h2>3. Aserciones</h2>
+<div class="tablewrap"><table>
+<tr><th>Etapa</th><th class="n">PASS</th><th class="n">FAIL</th><th class="n">SKIP</th><th>Estado</th><th>Motivo de los SKIP</th></tr>
+<tr><td>a1 Red Vial</td><td class="n">27</td><td class="n">0</td><td class="n">0</td><td><span class="pill ok">PASS</span></td><td></td></tr>
+<tr><td>a2 Segmentación</td><td class="n">20</td><td class="n">0</td><td class="n">0</td><td><span class="pill ok">PASS</span></td><td></td></tr>
+<tr><td>a3 Altimetría</td><td class="n">20</td><td class="n">0</td><td class="n">1</td><td><span class="pill ok">PASS</span></td><td>No hay filas sin cota (salto trivial)</td></tr>
+<tr><td>a4 Destinos</td><td class="n">16</td><td class="n">0</td><td class="n">2</td><td><span class="pill ok">PASS</span></td><td>FT-06 no trae cota base: coherencia esquí no evaluable</td></tr>
+<tr><td>a5 Tránsito</td><td class="n">14</td><td class="n">0</td><td class="n">0</td><td><span class="pill ok">PASS</span></td><td></td></tr>
+<tr><td>final Ensamblaje</td><td class="n">11</td><td class="n">0</td><td class="n">2</td><td><span class="pill ok">PASS</span></td><td>Sin archivo del colega; sin cota base de esquí</td></tr>
+</table></div>
+<p>Ninguna aserción falló ni fue relajada. Dos aserciones de <code>test_a2</code> tenían bugs (un <code>grepl</code> con vector de patrones; la suposición de que <code>km_tramo</code> viene en km cuando la capa entrega metros); A7 las corrigió y agregó una aserción que protege la unidad. <code>en_zona_fronteriza</code> pasó de <code>derivado</code> a <code>estimado</code> en el esquema por geometría construida, y el test se ajustó al contrato documentado.</p>
+<p>Control de completitud: 43 pasos identificados frente a 64 habilitados de referencia → diferencia de 21, reportada y no corregida (parte de los 64 son fluviales o lacustres; parte de los accesos no está enrolada en FT-01).</p>
+
+<h2>4. Fuentes</h2>
+<div class="tablewrap"><table>
+<tr><th>Código</th><th>Estado</th><th>Nota</th></tr>
+<tr><td>FT-01 Red Vial</td><td><span class="pill ok">OK</span></td><td>ArcGIS 10.21 sin <code>resultOffset</code>; paginado por región + rango de OBJECTID. Magallanes en 12 páginas de 15 (HTTP 500 con bloques mayores).</td></tr>
+<tr><td>FT-02 Censos</td><td><span class="pill ok">OK</span></td><td>16 planillas (2024/2025) y 7 capas REST (2014–2025). Vigencia real hasta 2025, no 2019.</td></tr>
+<tr><td>FT-03a/b/c DIFROL</td><td><span class="pill ok">OK</span></td><td>Descarga manual previa, sha256 registrado. La zona fronteriza viene como líneas.</td></tr>
+<tr><td>FT-05 INE</td><td><span class="pill ok">OK</span></td><td>Comunas, provincias, ciudades, pueblos, aldeas, caseríos (Censo 2017). <code>geoportal.cl</code> respondió 404; se usó el REST/geodatos del INE.</td></tr>
+<tr><td>FT-06 SERNATUR</td><td><span class="pill warn">PARCIAL</span></td><td>No existe dataset de centros de esquí; se usó "Atractivos Turísticos" (4.853 puntos). No trae cota base → <code>esqui_cota_base</code> NULL en todo.</td></tr>
+<tr><td>FT-07 DEM GLO-30</td><td><span class="pill ok">OK</span></td><td>323 teselas cubren Chile continental sin huecos interiores; lectura remota COG. Lista oficial de teselas no liberadas inaccesible.</td></tr>
+<tr><td>FT-08 Nieve (GEE)</td><td><span class="pill off">NO EJECUTADO</span></td><td>Postergado por decisión de proyecto (registro de Earth Engine pendiente). Nivel nival vacío; no se sustituye por proxy.</td></tr>
+<tr><td>FT-09 Kapos</td><td><span class="pill ok">OK</span></td><td>Replicado sobre FT-07; clase 7 no derivable.</td></tr>
+</table></div>
+
+<h2>5. NULL: resultado, no defecto</h2>
+<div class="tablewrap"><table>
+<tr><th>Columna</th><th class="n">NULL</th><th>Motivo</th></tr>
+<tr><td><code>tuicion</code></td><td class="n">18.368</td><td>La capa lo entrega vacío en el 100 %.</td></tr>
+<tr><td><code>esqui_cota_base</code></td><td class="n">18.368</td><td>FT-06 no trae el campo.</td></tr>
+<tr><td><code>tmda</code></td><td class="n">16.518</td><td>13.800 con estación más cercana que censa otro rol; 1.694 con rama ambigua (candidatos listados); 1.011 sin rol identificable.</td></tr>
+<tr><td><code>delta_longitud_pct</code></td><td class="n">7.322</td><td>Hijos sin kilometraje oficial; 1.400 con <code>km_tramo</code> = 0.</td></tr>
+<tr><td><code>cota_max_z_mop</code></td><td class="n">2.215</td><td>Z íntegramente 0 en la geometría de Vialidad.</td></tr>
+<tr><td><code>comuna</code>, <code>provincia</code></td><td class="n">8</td><td>Hijos de 33–326 m fuera de todo polígono comunal INE.</td></tr>
+<tr><td><code>en_lista_colega</code>, nivel nival</td><td class="n">bloque</td><td>Archivo del colega inexistente; FT-08 postergado.</td></tr>
+</table></div>
+<p>El detalle por celda está en <code>data/pendientes.csv</code> (99.351 filas).</p>
+
+<h2>6. Hallazgos para el equipo</h2>
+<ul>
+  <li><code>km_inicio</code>, <code>km_fin</code>, <code>km_tramo</code> vienen en <b>metros</b> en la capa de Vialidad (anotado en <code>docs/esquema.md</code>).</li>
+  <li>76 tramos con |delta_longitud_pct| &gt; 10 %: kilometraje oficial inconsistente con la geometría.</li>
+  <li>17 hijos (casi todos Ruta 5) conservan ≥ 20 m en una segunda comuna tras el corte; comuna asignada por longitud dominante.</li>
+  <li>Dominios reales de FT-01 más amplios que los codificados (25 clasificaciones; <code>Si</code>/<code>DRV</code> en <code>enrolado</code>). Todo conservado literal.</li>
+  <li>6 centros de esquí sin tramo enrolado a ≤ 500 m: brecha de cobertura de FT-01 (caminos internos o no enrolados), no se completa a mano.</li>
+  <li>163 tramos con |Δ| &gt; 50 m entre el DEM y el Z de Vialidad: revisar geometría o dosel.</li>
+  <li><code>esquema.md</code> y <code>fuentes.md</code> estaban en la raíz; se copiaron a <code>docs/</code>.</li>
+</ul>
+
+<h2>7. Entregables y cómo abrirlos</h2>
+<div class="tablewrap"><table>
+<tr><th>Archivo</th><th>Contenido</th></tr>
+<tr><td><code>data/processed/tramos.parquet</code></td><td>La base: 18.368 filas, 60 columnas, geometría en WKB (209 MB).</td></tr>
+<tr><td><code>data/processed/tramos.gpkg</code></td><td>La misma tabla con geometría nativa, para QGIS (277 MB).</td></tr>
+<tr><td><code>data/processed/procedencia.parquet</code></td><td>883.671 filas: fuente, fecha y método por cada celda no nula.</td></tr>
+<tr><td><code>data/pendientes.csv</code></td><td>Cada NULL con su motivo.</td></tr>
+<tr><td><code>logs/informe_final.md</code></td><td>Este informe en texto.</td></tr>
+</table></div>
+<p>Parquet es un formato columnar; no se abre con doble clic, pero cualquier herramienta de datos lo lee directo:</p>
+<pre># R
+library(arrow); t &lt;- read_parquet("data/processed/tramos.parquet")
+# R con geometría (desde el GPKG, más cómodo para mapas)
+library(sf); t &lt;- st_read("data/processed/tramos.gpkg", "tramos")
+# Python (pip install pandas pyarrow)
+import pandas as pd; t = pd.read_parquet("data/processed/tramos.parquet")
+# QGIS: Capa → Añadir capa vectorial → tramos.gpkg (o el .parquet, QGIS ≥ 3.28)
+# Excel / Power BI: Obtener datos → Parquet</pre>
+
+<p class="foot">Todo es re-ejecutable: <code>Rscript src/0X_&lt;etapa&gt;/&lt;script&gt;.R</code> y <code>Rscript tests/run.R &lt;a1|a2|a3|a4|a5|final&gt;</code>. Siguiente paso: agregar <code>reference/candidatos_colega.xlsx</code> y correr el contraste; decidir el corte de inclusión sobre los niveles geomorfológico y funcional.</p>
+</main>

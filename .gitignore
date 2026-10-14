@@ -1,0 +1,18 @@
+# Productos intermedios: se regeneran corriendo las etapas
+data/interim/
+
+# Archivos sueltos de trabajo
+scratch_*.json
+
+# Python y R
+__pycache__/
+*.pyc
+.Rhistory
+.RData
+.Rproj.user/
+
+# Sistema y Office
+Thumbs.db
+desktop.ini
+.DS_Store
+~$*

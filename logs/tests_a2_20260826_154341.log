@@ -1,0 +1,36 @@
+== Validación etapa a2 — 2026-08-26 15:43:41 ==
+Raíz: .
+[PASS] A2: columnas requeridas presentes (id_tramo, id_tramo_a1, bloque A2)
+[PASS] A2: no escribe columnas de otros bloques (A3/A4/A5/ORQ)
+[PASS] A2: id_tramo es único y no nulo
+[PASS] A2: todo id_tramo_a1 de A1 aparece al menos una vez
+[PASS] A2: todo id_tramo_a1 de A2 existe en A1
+[PASS] A2: utm_zona ∈ {18, 19}
+[PASS] A2: longitud_calc_m > 0 en toda fila
+[PASS] A2: motivo_corte en dominio
+[PASS] A2: subdividido no nulo (booleano)
+[PASS] A2: subdividido = FALSE ⇒ id_tramo == id_tramo_a1
+[PASS] A2: subdividido = FALSE ⇒ motivo_corte == 'original'
+[FAIL] A2: subdividido = TRUE ⇒ id_tramo tiene formato <id_tramo_a1>-<k> y motivo != original
+         Expected `all(ok)` to be TRUE.
+         Differences:
+         `actual`:   FALSE
+         `expected`: TRUE 
+         
+         A-123-1-1, A-123-1-2, A-123-1-3, A-13-2-1, A-13-2-2, A-141-1-1, A-141-1-2, A-145-1-1, A-145-1-2, A-159-3-1 ... (+5910)
+[PASS] A2: suma de longitud_calc_m de hijos ≈ longitud del padre (±1 %)
+[PASS] A2: longitud_calc_m coincide con la geometría propia proyectada a su utm_zona (±1 %)
+[FAIL] A2: delta_longitud_pct coherente con km_tramo de A1 cuando ambos existen
+         Expected `length(malos) == 0` to be TRUE.
+         Differences:
+         `actual`:   FALSE
+         `expected`: TRUE 
+         
+         11046 tramos con delta_longitud_pct inconsistente: A-105-1, A-107-1, A-109-1, A-111-1, A-111-2, A-111-3, A-111-4, A-111-5, A-111-6, A-111-7 ... (+11036)
+[PASS] A2: coord_inicio y coord_fin no nulos
+[PASS] A2: procedencia — columnas, dominio de metodo, fuente no vacía
+[PASS] A2: toda celda no nula del bloque A2 tiene exactamente una fila de procedencia
+[PASS] A2: toda celda NULL del bloque A2 tiene fila en pendientes_a2.csv
+
+Resumen a2: 17 PASS, 2 FAIL, 0 SKIP (de 19 aserciones)
+ESTADO ETAPA A2: FAIL — etapa bloqueada (Regla 5)

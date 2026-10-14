@@ -1,0 +1,125 @@
+2026-08-26 19:27:51 UTC | Inicio A1 — https://rest-sit.mop.gob.cl/arcgis/rest/services/VIALIDAD/Red_Vial_Chile/MapServer/3
+2026-08-26 19:27:51 UTC |   [existe] layer3_metadata.json (20 reg.)
+2026-08-26 19:27:51 UTC | Capa: 1:1.128 | geometría esriGeometryPolyline | hasZ=TRUE hasM=TRUE | MaxRecordCount=1000 | wkid=5360 | versión ArcGIS 10.21 | supportsPagination=ausente
+2026-08-26 19:27:51 UTC |   dominio CALZADA: I | D | U
+2026-08-26 19:27:51 UTC |   dominio ORIENTACION: CENTRO | SUR | ESTE | NORTE | OESTE | ÚNICA
+2026-08-26 19:27:51 UTC |   dominio CLASIFICACION: Camino Nacional con Carácter de Internacional | Camino Nacional Longitudinal | Camino Nacional | Camino Regional Principal | Camino Regional Provincial | Camino Regional Comunal | Camino Regional de Acceso | Conexión Vial Urbana | Camino Glosa Presupuestaria | Camino Indígena | Camino Privado | Sin Información | Camino por Enrolar
+2026-08-26 19:27:51 UTC |   dominio CARPETA: Grava Tratada | Pavimento | Pavimento Básico | Pavimento Doble Calzada | Ripio | Suelo Natural | Sin Información
+2026-08-26 19:27:51 UTC |   dominio ENROLADO: Sí | No | Sin Revisar
+2026-08-26 19:27:51 UTC |   dominio CONCESIONADO: Sí | No | Sin Revisar
+2026-08-26 19:27:51 UTC |   dominio REGION: Región de Arica y Parinacota | Región de Tarapacá | Región de Antofagasta | Región de Atacama | Región de Coquimbo | Región de Valparaíso | Región Metropolitana de Santiago | Región del Libertador General Bernardo O'Higgins | Región del Maule | Región de Ñuble | Región del Biobío | Región de La Araucanía | Región de Los Ríos | Región de Los Lagos | Región Aysén del General Carlos Ibáñez del Campo | Región de Magallanes y La Antártica Chilena
+2026-08-26 19:27:51 UTC |   dominio TUICION: Sí | No | Sin Revisar
+2026-08-26 19:27:51 UTC |   [existe] count_total.json (14003 reg.)
+2026-08-26 19:27:51 UTC | Total declarado por el servicio: 14003
+2026-08-26 19:27:51 UTC |   [existe] regiones_distinct.json (16 reg.)
+2026-08-26 19:27:51 UTC | Regiones distintas: 16
+2026-08-26 19:27:51 UTC | Región: Región Aysén del General Carlos Ibáñez del Campo -> region_aysen_del_general_carlos_ibanez_del_campo
+2026-08-26 19:27:51 UTC |   [existe] region_aysen_del_general_carlos_ibanez_del_campo_count.json (325 reg.)
+2026-08-26 19:27:51 UTC |   [existe] region_aysen_del_general_carlos_ibanez_del_campo_ids.json (325 reg.)
+2026-08-26 19:27:56 UTC |   [existe] región completa en 1 página(s) previas (325 reg.)
+2026-08-26 19:27:56 UTC |   región region_aysen_del_general_carlos_ibanez_del_campo: esperado 325, descargado 325 en 1 página(s) de NA
+2026-08-26 19:27:56 UTC | Región: Región de Antofagasta -> region_de_antofagasta
+2026-08-26 19:27:56 UTC |   [existe] region_de_antofagasta_count.json (301 reg.)
+2026-08-26 19:27:56 UTC |   [existe] region_de_antofagasta_ids.json (301 reg.)
+2026-08-26 19:27:58 UTC |   [existe] región completa en 1 página(s) previas (301 reg.)
+2026-08-26 19:27:58 UTC |   región region_de_antofagasta: esperado 301, descargado 301 en 1 página(s) de NA
+2026-08-26 19:27:58 UTC | Región: Región de Arica y Parinacota -> region_de_arica_y_parinacota
+2026-08-26 19:27:58 UTC |   [existe] region_de_arica_y_parinacota_count.json (145 reg.)
+2026-08-26 19:27:58 UTC |   [existe] region_de_arica_y_parinacota_ids.json (145 reg.)
+2026-08-26 19:27:59 UTC |   [existe] región completa en 1 página(s) previas (145 reg.)
+2026-08-26 19:27:59 UTC |   región region_de_arica_y_parinacota: esperado 145, descargado 145 en 1 página(s) de NA
+2026-08-26 19:27:59 UTC | Región: Región de Atacama -> region_de_atacama
+2026-08-26 19:27:59 UTC |   [existe] region_de_atacama_count.json (646 reg.)
+2026-08-26 19:27:59 UTC |   [existe] region_de_atacama_ids.json (646 reg.)
+2026-08-26 19:28:04 UTC |   [existe] región completa en 1 página(s) previas (646 reg.)
+2026-08-26 19:28:04 UTC |   región region_de_atacama: esperado 646, descargado 646 en 1 página(s) de NA
+2026-08-26 19:28:04 UTC | Región: Región de Coquimbo -> region_de_coquimbo
+2026-08-26 19:28:04 UTC |   [existe] region_de_coquimbo_count.json (759 reg.)
+2026-08-26 19:28:04 UTC |   [existe] region_de_coquimbo_ids.json (759 reg.)
+2026-08-26 19:28:08 UTC |   [existe] región completa en 1 página(s) previas (759 reg.)
+2026-08-26 19:28:08 UTC |   región region_de_coquimbo: esperado 759, descargado 759 en 1 página(s) de NA
+2026-08-26 19:28:08 UTC | Región: Región de La Araucanía -> region_de_la_araucania
+2026-08-26 19:28:08 UTC |   [existe] region_de_la_araucania_count.json (1811 reg.)
+2026-08-26 19:28:08 UTC |   [existe] region_de_la_araucania_ids.json (1811 reg.)
+2026-08-26 19:28:11 UTC |   [existe] región completa en 2 página(s) previas (1811 reg.)
+2026-08-26 19:28:11 UTC |   región region_de_la_araucania: esperado 1811, descargado 1811 en 2 página(s) de NA
+2026-08-26 19:28:11 UTC | Región: Región de Los Lagos -> region_de_los_lagos
+2026-08-26 19:28:11 UTC |   [existe] region_de_los_lagos_count.json (1490 reg.)
+2026-08-26 19:28:11 UTC |   [existe] region_de_los_lagos_ids.json (1490 reg.)
+2026-08-26 19:28:16 UTC |   [existe] región completa en 2 página(s) previas (1490 reg.)
+2026-08-26 19:28:16 UTC |   región region_de_los_lagos: esperado 1490, descargado 1490 en 2 página(s) de NA
+2026-08-26 19:28:16 UTC | Región: Región de Los Ríos -> region_de_los_rios
+2026-08-26 19:28:16 UTC |   [existe] region_de_los_rios_count.json (831 reg.)
+2026-08-26 19:28:16 UTC |   [existe] region_de_los_rios_ids.json (831 reg.)
+2026-08-26 19:28:19 UTC |   [existe] región completa en 1 página(s) previas (831 reg.)
+2026-08-26 19:28:19 UTC |   región region_de_los_rios: esperado 831, descargado 831 en 1 página(s) de NA
+2026-08-26 19:28:19 UTC | Región: Región de Magallanes y La Antártica Chilena -> region_de_magallanes_y_la_antartica_chilena
+2026-08-26 19:28:19 UTC |   [existe] region_de_magallanes_y_la_antartica_chilena_count.json (167 reg.)
+2026-08-26 19:28:19 UTC |   [existe] region_de_magallanes_y_la_antartica_chilena_ids.json (167 reg.)
+2026-08-26 19:28:29 UTC |   [existe] región completa en 12 página(s) previas (167 reg.)
+2026-08-26 19:28:29 UTC |   región region_de_magallanes_y_la_antartica_chilena: esperado 167, descargado 167 en 12 página(s) de NA
+2026-08-26 19:28:29 UTC | Región: Región de Ñuble -> region_de_nuble
+2026-08-26 19:28:29 UTC |   [existe] region_de_nuble_count.json (868 reg.)
+2026-08-26 19:28:29 UTC |   [existe] region_de_nuble_ids.json (868 reg.)
+2026-08-26 19:28:31 UTC |   [existe] región completa en 1 página(s) previas (868 reg.)
+2026-08-26 19:28:31 UTC |   región region_de_nuble: esperado 868, descargado 868 en 1 página(s) de NA
+2026-08-26 19:28:31 UTC | Región: Región de Tarapacá -> region_de_tarapaca
+2026-08-26 19:28:31 UTC |   [existe] region_de_tarapaca_count.json (276 reg.)
+2026-08-26 19:28:31 UTC |   [existe] region_de_tarapaca_ids.json (276 reg.)
+2026-08-26 19:28:32 UTC |   [existe] región completa en 1 página(s) previas (276 reg.)
+2026-08-26 19:28:32 UTC |   región region_de_tarapaca: esperado 276, descargado 276 en 1 página(s) de NA
+2026-08-26 19:28:32 UTC | Región: Región de Valparaíso -> region_de_valparaiso
+2026-08-26 19:28:32 UTC |   [existe] region_de_valparaiso_count.json (1552 reg.)
+2026-08-26 19:28:32 UTC |   [existe] region_de_valparaiso_ids.json (1552 reg.)
+2026-08-26 19:28:34 UTC |   [existe] región completa en 2 página(s) previas (1552 reg.)
+2026-08-26 19:28:34 UTC |   región region_de_valparaiso: esperado 1552, descargado 1552 en 2 página(s) de NA
+2026-08-26 19:28:34 UTC | Región: Región del Biobío -> region_del_biobio
+2026-08-26 19:28:34 UTC |   [existe] region_del_biobio_count.json (1035 reg.)
+2026-08-26 19:28:34 UTC |   [existe] region_del_biobio_ids.json (1035 reg.)
+2026-08-26 19:28:37 UTC |   [existe] región completa en 2 página(s) previas (1035 reg.)
+2026-08-26 19:28:37 UTC |   región region_del_biobio: esperado 1035, descargado 1035 en 2 página(s) de NA
+2026-08-26 19:28:37 UTC | Región: Región del Libertador General Bernardo O'Higgins -> region_del_libertador_general_bernardo_o_higgins
+2026-08-26 19:28:37 UTC |   [existe] region_del_libertador_general_bernardo_o_higgins_count.json (1559 reg.)
+2026-08-26 19:28:37 UTC |   [existe] region_del_libertador_general_bernardo_o_higgins_ids.json (1559 reg.)
+2026-08-26 19:28:40 UTC |   [existe] región completa en 2 página(s) previas (1559 reg.)
+2026-08-26 19:28:40 UTC |   región region_del_libertador_general_bernardo_o_higgins: esperado 1559, descargado 1559 en 2 página(s) de NA
+2026-08-26 19:28:40 UTC | Región: Región del Maule -> region_del_maule
+2026-08-26 19:28:40 UTC |   [existe] region_del_maule_count.json (1466 reg.)
+2026-08-26 19:28:40 UTC |   [existe] region_del_maule_ids.json (1466 reg.)
+2026-08-26 19:28:45 UTC |   [existe] región completa en 2 página(s) previas (1466 reg.)
+2026-08-26 19:28:45 UTC |   región region_del_maule: esperado 1466, descargado 1466 en 2 página(s) de NA
+2026-08-26 19:28:45 UTC | Región: Región Metropolitana de Santiago -> region_metropolitana_de_santiago
+2026-08-26 19:28:45 UTC |   [existe] region_metropolitana_de_santiago_count.json (772 reg.)
+2026-08-26 19:28:45 UTC |   [existe] region_metropolitana_de_santiago_ids.json (772 reg.)
+2026-08-26 19:28:47 UTC |   [existe] región completa en 1 página(s) previas (772 reg.)
+2026-08-26 19:28:47 UTC |   región region_metropolitana_de_santiago: esperado 772, descargado 772 en 1 página(s) de NA
+2026-08-26 19:28:47 UTC | Suma por región = 14003 | total servicio = 14003 | OK
+2026-08-26 19:28:47 UTC | Leyendo 33 páginas (parser propio de Esri JSON)
+2026-08-26 19:29:52 UTC | Filas leídas: 14003 | CRS EPSG:5360 | multiparte originales: 5 | geometrías vacías: 0 | features sin Z: 0
+2026-08-26 19:29:52 UTC | Campos del esquema ausentes en la capa: ninguno
+2026-08-26 19:29:52 UTC | Campos de la capa no usados por A1: ROL_LABEL, GlobalID, SHAPE.STLength()
+2026-08-26 19:29:52 UTC | Z: vértices con Z=10593733 | min=-26.96 | max=5188.34 | mediana=200.00 | % ceros=3.76% | NA=0
+2026-08-26 19:29:53 UTC | Filas con Z íntegramente 0: 1622 de 14003 con Z
+2026-08-26 19:29:53 UTC | Z máx por fila: min=-3.2 | mediana=215.1 | max=5188.3 | filas con Zmax>1000: 1168 | >2000: 475 | >3000: 295
+2026-08-26 19:29:54 UTC | Excluidas por geometría vacía: 0 | por Isla de Pascua (lon < -100°): 58
+2026-08-26 19:29:54 UTC | Multilíneas (multiparte) conservadas en la tabla: 5 | todas las geometrías almacenadas como MULTILINESTRING Z
+2026-08-26 19:29:54 UTC | Reproyección 5360->4326. Pipeline elegido por PROJ: +proj=noop +ellps=GRS80 | descripción: axis order change (2D) + Inverse of SAD69 to SIRGAS-Chile 2002 (1) + SAD69 to WGS 84 (17) + axis order change (2D) | accuracy: 9
+2026-08-26 19:29:57 UTC | CRS final EPSG:4326 | Z conservado: TRUE
+2026-08-26 19:30:01 UTC | Escrito ./data/interim/a1_red_vial.gpkg capa tramos: 13945 filas
+2026-08-26 19:30:01 UTC | Procedencia: 205316 filas
+2026-08-26 19:30:02 UTC | Pendientes: 17804 filas
+2026-08-26 19:30:02 UTC | Excluidos: 58 filas en a1_excluidos.csv
+2026-08-26 19:30:02 UTC | ---- RESUMEN ----
+2026-08-26 19:30:02 UTC | Filas por región:
+2026-08-26 19:30:02 UTC | NULL por columna:
+2026-08-26 19:30:02 UTC | Valores distintos de clasificacion:
+2026-08-26 19:30:02 UTC | Valores distintos de carpeta:
+2026-08-26 19:30:02 UTC | Valores distintos de calzada:
+2026-08-26 19:30:02 UTC | Valores distintos de orientacion_ruta:
+2026-08-26 19:30:02 UTC | Valores distintos de enrolado:
+2026-08-26 19:30:02 UTC | Valores distintos de concesionado:
+2026-08-26 19:30:02 UTC | Valores distintos de tuicion:
+2026-08-26 19:30:02 UTC | Valores distintos de region:
+2026-08-26 19:30:02 UTC | km_inicio rango: 0-2079405 | km_tramo rango: 0-323331
+2026-08-26 19:30:02 UTC | Roles distintos: 8084 | SINROL: 0
+2026-08-26 19:30:02 UTC | Fin A1

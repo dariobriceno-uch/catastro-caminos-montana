@@ -1,0 +1,23 @@
+n tramos: 18368 
+tramos nivel geomorfologico (Kapos 1-5 o portezuelo): 1458  km: 22073 
+  Kapos 1-5: 1320  | portezuelo: 232 
+roles identificables con >=1 tramo geomorfologico: 643 
+tramos geomorfologicos sin rol identificable: 218 
+tramos con cota_max >= 1500 m: 738  roles: 305 
+                                           region tramos   km roles
+                                Región de Atacama    296 4530   151
+                               Región de Tarapacá    227 3079    82
+                            Región de Antofagasta    209 4750    61
+                               Región de Coquimbo    188 2098    92
+                           Región de La Araucanía    145 1419    38
+                     Región de Arica y Parinacota    117 1952    60
+                             Región de Valparaíso     66  404    39
+                 Región Metropolitana de Santiago     64  371    22
+                                 Región del Maule     31  561    19
+                                Región del Biobío     29  642    22
+                               Región de Los Ríos     20  332    18
+ Región Aysén del General Carlos Ibáñez del Campo     19  714    15
+ Región del Libertador General Bernardo O'Higgins     16  152     7
+                              Región de Los Lagos     15  459    13
+                                  Región de Ñuble     10  187     6
+      Región de Magallanes y La Antártica Chilena      6  423     6

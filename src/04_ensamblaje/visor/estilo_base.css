@@ -1,0 +1,86 @@
+/* VISOR DE TRAMOS — tokens, reset y armazon. Los modulos aportan su propio CSS. */
+:root{
+  --f-bg:#f7f6f3; --f-panel:#ffffff; --f-borde:#e3e0d8; --f-borde-fuerte:#c9c4b8;
+  --f-txt:#1c1b18; --f-txt-2:#5c5850; --f-txt-3:#736f66;
+  --f-acento:#8a5a2b; --f-acento-sv:#f0e6da; --f-sel:#1f6feb; --f-sel-sv:#dce9fd;
+  --f-nulo:#726e67; --f-nulo-graf:#b8b2a6; --f-ok:#2f6b4f; --f-alerta:#9a4a1f;
+  --f-mapa-bg:#efece5; 
+  --f-sombra:0 1px 2px rgba(28,27,24,.06),0 4px 12px rgba(28,27,24,.06);
+  --f-mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --f-sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --f-r:6px;
+}
+:root:not([data-tema="claro"]){}
+@media (prefers-color-scheme:dark){
+  :root:not([data-tema="claro"]){
+    --f-bg:#161513; --f-panel:#1e1d1a; --f-borde:#33312c; --f-borde-fuerte:#4a4740;
+    --f-txt:#eceae4; --f-txt-2:#a8a49a; --f-txt-3:#8a877f;
+    --f-acento:#d99a5e; --f-acento-sv:#3a2c1c; --f-sel:#5b9bff; --f-sel-sv:#1b2c47;
+    --f-nulo:#898781; --f-nulo-graf:#5e5a52; --f-ok:#6fbf95; --f-alerta:#e08a55;
+    --f-mapa-bg:#111110;
+    --f-sombra:0 1px 2px rgba(0,0,0,.4),0 4px 12px rgba(0,0,0,.3);
+  }
+}
+:root[data-tema="oscuro"]{
+  --f-bg:#161513; --f-panel:#1e1d1a; --f-borde:#33312c; --f-borde-fuerte:#4a4740;
+  --f-txt:#eceae4; --f-txt-2:#a8a49a; --f-txt-3:#8a877f;
+  --f-acento:#d99a5e; --f-acento-sv:#3a2c1c; --f-sel:#5b9bff; --f-sel-sv:#1b2c47;
+  --f-nulo:#898781; --f-nulo-graf:#5e5a52; --f-ok:#6fbf95; --f-alerta:#e08a55;
+  --f-mapa-bg:#111110;
+  --f-sombra:0 1px 2px rgba(0,0,0,.4),0 4px 12px rgba(0,0,0,.3);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--f-bg);color:var(--f-txt);font-family:var(--f-sans);
+  font-size:13px;line-height:1.45;-webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit}
+
+#app{display:flex;flex-direction:column;height:100vh}
+
+#cabecera{display:flex;align-items:center;gap:12px;padding:10px 16px;
+  background:var(--f-panel);border-bottom:1px solid var(--f-borde);flex:0 0 auto}
+#cabecera h1{margin:0;font-size:14px;font-weight:650;letter-spacing:-.01em;white-space:nowrap;
+  flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
+/* la subcabecera cede espacio antes que los controles: nunca los empuja fuera */
+#cabecera .sub{color:var(--f-txt-3);font-size:11px;flex:1 1 auto;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#cabecera #cab-acciones,#cabecera #btn-tema{flex:0 0 auto}
+
+
+#cuerpo{flex:1;display:flex;min-height:0;position:relative}
+#panel-tabla{flex:1 1 58%;min-width:0;display:flex;flex-direction:column;
+  border-right:1px solid var(--f-borde);background:var(--f-panel)}
+#panel-mapa{flex:1 1 42%;min-width:0;position:relative;background:var(--f-mapa-bg)}
+/* La ficha es un tercer panel en el flujo, no una capa encima: al abrirse el
+   mapa se encoge y conserva sus controles. Antes tapaba el tramo recién
+   seleccionado y los botones de encuadre. */
+#panel-ficha{flex:0 0 clamp(320px,30vw,420px);min-width:0;
+  background:var(--f-panel);border-left:1px solid var(--f-borde-fuerte);
+  overflow:auto;display:none}
+#panel-ficha.abierto{display:block}
+@media (max-width:900px){
+  /* sin ancho para tres paneles: la ficha pasa a cubrir, pero entera y opaca,
+     nunca a medias sobre los controles. El umbral tiene que coincidir con el
+     mqCubre de ficha.js, que es el que la marca como dialogo modal. */
+  #panel-ficha{position:absolute;inset:0;flex:none;max-width:none;z-index:40;
+    box-shadow:var(--f-sombra)}
+}
+
+.vacio{color:var(--f-nulo)}
+.chip{display:inline-block;padding:1px 6px;border-radius:999px;font-size:10.5px;
+  background:var(--f-acento-sv);color:var(--f-acento);white-space:nowrap}
+.btn{background:var(--f-panel);border:1px solid var(--f-borde-fuerte);border-radius:var(--f-r);
+  padding:4px 9px;cursor:pointer;font-size:12px}
+.btn:hover{border-color:var(--f-acento);color:var(--f-acento)}
+.mono{font-family:var(--f-mono);font-size:11.5px;font-variant-numeric:tabular-nums}
+
+#carga{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:10px;background:var(--f-bg);z-index:100;font-size:13px}
+#carga.oculto{display:none}
+#carga .err{color:var(--f-alerta);max-width:520px;text-align:center;line-height:1.5}
+
+@media (max-width:900px){
+  #cuerpo{flex-direction:column}
+  #panel-tabla{flex:1 1 55%;border-right:0;border-bottom:1px solid var(--f-borde)}
+  #panel-mapa{flex:1 1 45%}
+}

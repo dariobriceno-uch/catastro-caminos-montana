@@ -1,0 +1,17 @@
+Aviso:
+package 'arrow' was built under R version 4.5.3 
+A5: tramos 18368 | espacial 18368 | rol_kilometraje 0 
+  NULL tmda : 16518 
+  NULL tmda_invierno : 16999 
+  NULL tmda_composicion : 17005 
+  NULL punto_censal_id : 0 
+  NULL dist_punto_censal_m : 0 
+  NULL tmda_anio : 13810 
+  NULL match_metodo : 0 
+  dist_punto_censal_m mediana: 4767 | >5000 m: 8846 
+  procedencia filas: 64244 | pendientes filas: 64332 
+  rama_ambigua: 1694 | rol_no_identificable: 1011 
+  tmda_anio: 2014 21 2016 930 2017 168 2018 27 2019 1 2020 118 2021 12 2022 38 2023 69 2024 2106 2025 1068 
+  dist p95: 19667 | >10000 m: 3761 
+  tiempo: 2 min
+EXIT 0

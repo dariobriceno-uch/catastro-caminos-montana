@@ -1,0 +1,54 @@
+inicio 2026-08-26T20:41:29Z
+Aviso:
+package 'arrow' was built under R version 4.5.3 
+Spherical geometry (s2) switched off
+tramos: 18368 | zonas UTM: 18,19
+localidades INE: 4955 | categorías: ALDEA 727, CASERÍO 3669, CIUDAD 270, PUEBLO 289
+localidades con servicios (CIUDAD+PUEBLO): 559
+centros de esquí FT-06 (criterio atributos): 18
+zona fronteriza: hueco del límite cerrado con segmento de 62.1 km entre (-73.0867, -49.2839) y (-73.4497, -49.7894)
+zona fronteriza: extremo 1 cerrado por mar (164 km al límite en línea recta): segmentos (-70.3443, -20.0611) -> (-73.2093, -20.0161) -> (-73.4189, -19.7491)
+zona fronteriza: extremo 2 de la línea ZF toca el límite
+zona fronteriza: 1 polígono(s), área 677604 km2; control: 82/82 pasos FT-03a dentro
+zona 18: 8624 tramos
+  [16:42:02] capas reproyectadas; límite en 79297 segmentos (0.1 min)
+  [16:42:05] comuna: st_intersects listo; 1 candidato=6638, >1=1982, 0=4 (0.0 min)
+  [16:42:16] comuna: intersección exacta 500/1982 (0.2 min)
+  [16:42:27] comuna: intersección exacta 1000/1982 (0.4 min)
+  [16:42:39] comuna: intersección exacta 1500/1982 (0.6 min)
+  [16:42:55] comuna: listo (0.9 min)
+  [16:42:59] provincia: st_intersects listo; 1 candidato=8044, >1=576, 0=4 (0.1 min)
+  [16:43:10] provincia: intersección exacta 500/576 (0.3 min)
+  [16:43:13] provincia: listo (0.3 min)
+  [16:43:13] pasos: 8 tramos con objeto a <= 500 m (0.0 min)
+  [16:43:14] esquí: 3 tramos con objeto a <= 500 m (0.0 min)
+  [16:43:48] localidades: 2866 tramos con objeto a <= 500 m (0.6 min)
+  [16:43:56] dist_limite_m: 8624 extremos (0.1 min)
+  [16:43:56] en_zona_fronteriza: 745 TRUE (0.0 min)
+  [16:46:10] dist_servicios_km listo (2.2 min)
+  [16:46:10] zona 18 completa (4.2 min)
+zona 19: 9744 tramos
+  [16:46:16] capas reproyectadas; límite en 79297 segmentos (0.1 min)
+  [16:46:18] comuna: st_intersects listo; 1 candidato=8184, >1=1556, 0=4 (0.0 min)
+  [16:46:30] comuna: intersección exacta 500/1556 (0.2 min)
+  [16:46:41] comuna: intersección exacta 1000/1556 (0.4 min)
+  [16:46:53] comuna: intersección exacta 1500/1556 (0.6 min)
+  [16:46:54] comuna: listo (0.6 min)
+  [16:46:57] provincia: st_intersects listo; 1 candidato=9396, >1=344, 0=4 (0.0 min)
+  [16:47:05] provincia: listo (0.2 min)
+  [16:47:06] pasos: 42 tramos con objeto a <= 500 m (0.0 min)
+  [16:47:07] esquí: 13 tramos con objeto a <= 500 m (0.0 min)
+  [16:48:17] localidades: 6424 tramos con objeto a <= 500 m (1.2 min)
+  [16:48:24] dist_limite_m: 9744 extremos (0.1 min)
+  [16:48:24] en_zona_fronteriza: 2038 TRUE (0.0 min)
+  [16:51:56] dist_servicios_km listo (3.5 min)
+  [16:51:56] zona 19 completa (5.8 min)
+tramos con más de una comuna (A2 debió cortar): 3538 | con más de una provincia: 920
+
+== a4_destinos: 18368 filas ==
+NULL por columna: provincia=8, comuna=8, es_paso=0, paso_nombre=18318, paso_pais=18318, paso_trafico=18318, paso_habilitacion=18318, dist_limite_m=0, en_zona_fronteriza=0, es_esqui=0, esqui_nombre=18352, esqui_cota_base=18368, es_localidad=0, localidad_nombre=9078, dist_servicios_km=0, buffer_join_m=0
+es_paso TRUE: 50 | es_esqui TRUE: 16 | es_localidad TRUE: 9290 | en_zona_fronteriza TRUE: 2783
+tramos con paso vehicular (Personas, vehículos y carga / Solo cruce de peatones y vehículos particulares): 43 | con paso no vehicular: 7
+procedencia: 174802 filas | pendientes: 23 filas
+  [16:51:57] tiempo total (10.0 min)
+fin 2026-08-26T20:51:57Z

@@ -1,0 +1,7 @@
+== Validación etapa a1 — 2026-08-26 14:12:15 ==
+Raíz: .
+SKIP: la etapa no puede validarse todavía; faltan insumos:
+  - data/interim/a1_red_vial.gpkg
+  - data/interim/procedencia_a1.parquet
+(Ninguna aserción ejecutada. Esto NO es un PASS: la etapa sigue abierta.)
+ESTADO ETAPA A1: SKIP (sin insumos)

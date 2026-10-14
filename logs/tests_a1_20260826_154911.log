@@ -1,0 +1,32 @@
+== Validación etapa a1 — 2026-08-26 15:49:11 ==
+Raíz: .
+[PASS] A1: columnas exactamente bloque A1 + objectid_mop + id_tramo_a1
+[PASS] A1: id_tramo_a1 es único y no nulo
+[PASS] A1: id_tramo_a1 tiene formato <rol>-<n>
+[PASS] A1: objectid_mop es único y no nulo
+[PASS] A1: toda geometría es no vacía y de tipo línea
+[PASS] A1: geometría fuera de Isla de Pascua (lon > -100)
+[PASS] A1: existen JSON crudos de FT-01 en data/raw/red_vial
+[PASS] A1: todo rol de la tabla existe en la capa cruda
+[PASS] A1: todo objectid_mop existe en la capa cruda y no está duplicado en ella
+[PASS] A1: atributos declarados copiados literales desde el crudo (por objectid_mop)
+[PASS] A1: 'Sin Revisar' se conserva literal (no colapsado a No ni NULL)
+[PASS] A1: dominio de enrolado/concesionado/tuicion ⊆ {Sí, No, Sin Revisar}
+[PASS] A1: manifest A1 tiene los campos exigidos por el protocolo
+[PASS] A1: cada archivo del manifest existe
+[PASS] A1: sha256 de cada archivo coincide con el manifest
+[PASS] A1: filas de a1 + filas excluidas reportadas = suma n_registros del manifest
+[PASS] A1: n_registros del manifest coincide con features reales de cada JSON
+[PASS] A1: procedencia tiene columnas exactas del protocolo
+[PASS] A1: metodo ∈ {derivado, declarado, estimado}
+[PASS] A1: ninguna fila con metodo = derivado y fuente vacía
+[PASS] A1: toda fila de procedencia tiene fuente y fecha_descarga ISO
+[PASS] A1: fuente de A1 es FT-01
+[PASS] A1: toda celda no nula tiene exactamente una fila de procedencia (y ninguna de más)
+[PASS] A1: campos declarados llevan metodo=declarado y geometria metodo=derivado
+[PASS] A1: toda celda NULL de un campo A1 tiene fila en pendientes_a1.csv
+[PASS] A1: pendientes_a1.csv, si existe, tiene columnas exactas del protocolo
+[PASS] A1: suma de n_registros de las páginas = count_total.json (conteo independiente del servicio)
+
+Resumen a1: 27 PASS, 0 FAIL, 0 SKIP (de 27 aserciones)
+ESTADO ETAPA A1: PASS

@@ -1,0 +1,21 @@
+== Validación etapa a7 — 2026-08-27 13:47:03 ==
+Raíz: .
+[PASS] A7: columnas requeridas y ninguna ajena
+[PASS] A7: exactamente una fila por id_tramo de la base
+[PASS] A7: rangos físicos — días en [0, 365], meses en [0, 12], sd >= 0
+[PASS] A7: serie declarada 2010-2024 y NULL coherente con n_anios_validos
+[PASS] A7: la mediana se reproduce desde el CSV crudo (muestra de 200 tramos)
+[PASS] A7: procedencia FT-08 / derivado / A7, una fila por celda con valor
+[PASS] A7: todo NULL de dias_nieve_mediana está en pendientes con motivo
+[PASS] A7: manifest/A7.json registra cada CSV crudo con su sha256
+[FAIL] A7: coherencia física — en el centro-sur la nieve sube con la cota
+         Expected `!is.na(r) && r > 0.3` to be TRUE.
+         Differences:
+         `actual`:   FALSE
+         `expected`: TRUE 
+         
+         rho centro-sur = 0.003
+[PASS] A7: los tramos de centros de esquí tienen más nieve que la mediana nacional
+
+Resumen a7: 9 PASS, 1 FAIL, 0 SKIP (de 10 aserciones)
+ESTADO ETAPA A7: FAIL — etapa bloqueada (Regla 5)

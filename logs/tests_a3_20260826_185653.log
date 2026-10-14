@@ -1,0 +1,27 @@
+== Validación etapa a3 — 2026-08-26 18:56:53 ==
+Raíz: .
+[PASS] A3: columnas requeridas presentes (id_tramo + bloque A3)
+[PASS] A3: no escribe columnas de otros bloques
+[PASS] A3: exactamente una fila por id_tramo de A2 (mismo conjunto, sin duplicados)
+[PASS] A3: ninguna cota escrita sin data/raw/dem/tile_index_glo30.csv
+[PASS] A3: ninguna cota escrita sin entrada FT-07 en el manifest
+[PASS] A3: un solo DEM declarado en el manifest FT-07 (sin cambio de DEM a mitad de camino)
+[PASS] A3: cota_min <= cota_media <= cota_max en toda fila no nula
+[PASS] A3: cota_culminante == cota_max (o documentado en pendientes/hallazgo)
+[PASS] A3: pendiente_media <= pendiente_max y ambas en [0, 90]
+[PASS] A3: clase_kapos ∈ 0..7 o NULL
+[PASS] A3: orientacion_ladera en ocho rumbos o NULL
+[PASS] A3: sinuosidad >= 1 cuando no nula
+[PASS] A3: desniveles acumulados >= 0 cuando no nulos
+[PASS] A3: cruza_portezuelo es booleano o NULL
+[PASS] A3: delta_z_m == cota_max - cota_max_z_mop cuando ambos existen
+[PASS] A3: si el Z de MOP es cero/NULL en todas las filas, cota_max_z_mop y delta_z_m van NULL
+[PASS] A3: cotas dentro de un rango físico plausible para un DEM (-500 a 7000 msnm)
+[PASS] A3: procedencia — columnas, metodo=derivado, fuente FT-07
+[PASS] A3: toda celda no nula del bloque A3 tiene exactamente una fila de procedencia
+[SKIP] A3: toda fila con todas las cotas NULL tiene entrada en pendientes_a3.csv
+         motivo: Reason: no hay filas sin cota
+[PASS] A3: toda celda NULL del bloque A3 tiene fila en pendientes_a3.csv
+
+Resumen a3: 20 PASS, 0 FAIL, 1 SKIP (de 21 aserciones)
+ESTADO ETAPA A3: PASS con saltos

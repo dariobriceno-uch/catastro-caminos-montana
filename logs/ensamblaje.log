@@ -1,0 +1,41 @@
+Aviso:
+package 'arrow' was built under R version 4.5.3 
+A2: 18368 filas
+A3 : 18368 filas, 14 columnas
+A4 : 18368 filas, 16 columnas
+A5 : 18368 filas, 7 columnas
+Procedencia: 883671 filas
+Pendientes: 99351 filas
+Escrito. Columnas: 64 
+           id_tramo     en_lista_colega         id_tramo_a1        objectid_mop 
+                  0               18368                   0                   0 
+                rol              rol_id       codigo_camino       nombre_camino 
+                  0                   0                   0                   0 
+      clasificacion             carpeta             calzada    orientacion_ruta 
+                  0                   0                2315                2547 
+          km_inicio              km_fin            km_tramo            enrolado 
+                  0                   0                   0                   2 
+       concesionado             tuicion              region     longitud_calc_m 
+                  0               18368                   0                   0 
+ delta_longitud_pct        coord_inicio           coord_fin         subdividido 
+               7322                   0                   0                   0 
+       motivo_corte            utm_zona            cota_min            cota_max 
+                  0                   0                   0                   0 
+         cota_media     cota_culminante     pendiente_media       pendiente_max 
+                  0                   0                   0                   0 
+ orientacion_ladera          sinuosidad   desnivel_subida_m   desnivel_bajada_m 
+                  1                   6                   0                   0 
+   cruza_portezuelo         clase_kapos      cota_max_z_mop           delta_z_m 
+                  0                   0                2215                2215 
+          provincia              comuna             es_paso         paso_nombre 
+                  8                   8                   0               18318 
+          paso_pais        paso_trafico   paso_habilitacion       dist_limite_m 
+              18318               18318               18318                   0 
+ en_zona_fronteriza            es_esqui        esqui_nombre     esqui_cota_base 
+                  0                   0               18352               18368 
+       es_localidad    localidad_nombre   dist_servicios_km       buffer_join_m 
+                  0                9078                   0                   0 
+               tmda       tmda_invierno    tmda_composicion     punto_censal_id 
+              16518               16999               17005                   0 
+dist_punto_censal_m           tmda_anio        match_metodo           geometria 
+                  0               13810                   0                   0 

@@ -1,0 +1,25 @@
+== Validación etapa a4 — 2026-08-26 18:57:16 ==
+Raíz: .
+[PASS] A4: columnas requeridas presentes (id_tramo + bloque A4)
+[PASS] A4: no escribe columnas de otros bloques (en particular ninguna cota del camino)
+[PASS] A4: exactamente una fila por id_tramo de A2
+[PASS] A4: buffer_join_m no nulo en toda fila
+[PASS] A4: es_paso = TRUE ⇒ paso_nombre no nulo
+[PASS] A4: paso_nombre no nulo ⇒ es_paso = TRUE (y análogo para esquí y localidad)
+[PASS] A4: todo paso_nombre existe en la capa cruda FT-03a
+[PASS] A4: la altitud de cada paso (cota de FT-03a) es única por paso_nombre
+[PASS] A4: atributos declarados del paso coinciden con FT-03a (pais, trafico, habilitacion)
+[PASS] A4: conteo de pasos distintos identificados vs 64 habilitados (se reporta, no veta)
+[SKIP] A4: es_esqui = TRUE y esqui_cota_base no nulo ⇒ cota_max del tramo (A3) <= esqui_cota_base
+         motivo: Reason: no hay tramos de esquí con cota base
+[SKIP] A4: ninguna cota de esquí fue copiada a una columna de altitud (esqui_cota_base solo en A4)
+         motivo: Reason: no hay tramos de esquí con cota base
+[PASS] A4: dist_limite_m, dist_servicios_km >= 0 cuando no nulos
+[PASS] A4: en_zona_fronteriza, es_paso, es_esqui, es_localidad son booleanos
+[PASS] A4: procedencia — columnas, dominio de metodo, fuente no vacía, fuentes FT-03/05/06
+[PASS] A4: metodo por campo según esquema (declarado vs derivado)
+[PASS] A4: toda celda no nula del bloque A4 tiene exactamente una fila de procedencia
+[PASS] A4: toda celda NULL del bloque A4 tiene fila en pendientes_a4.csv
+
+Resumen a4: 16 PASS, 0 FAIL, 2 SKIP (de 18 aserciones)
+ESTADO ETAPA A4: PASS con saltos

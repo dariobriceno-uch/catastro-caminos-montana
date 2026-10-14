@@ -1,0 +1,262 @@
+/* ===========================================================================
+   tabla.css — tabla virtualizada, barra, paneles de columnas y de filtros.
+   Solo tokens de estilo_base.css: el tema oscuro sale gratis.
+   =========================================================================== */
+
+.tabla { min-height: 0; position: relative; }
+
+/* --- barra superior ------------------------------------------------------ */
+/* contenedor de la barra y sus paneles: el ancla de posicionamiento de .t-pop */
+.t-zona-barra { position: relative; z-index: 30; flex: 0 0 auto; }
+.t-barra {
+  position: relative; flex: 0 0 auto;
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 8px; background: var(--f-panel);
+  border-bottom: 1px solid var(--f-borde);
+  /* El desborde depende del ancho del PANEL, no del viewport: al abrirse la
+     ficha el panel se encoge y la barra se imprimia encima del mapa. Una media
+     query no lo cubre; el ajuste tiene que ser incondicional. */
+  flex-wrap: wrap; min-width: 0; overflow: hidden;
+}
+.t-busca {
+  flex: 1 1 auto; min-width: 120px;
+  font: inherit; font-size: 12px; color: var(--f-txt);
+  background: var(--f-bg); border: 1px solid var(--f-borde-fuerte);
+  border-radius: var(--f-r); padding: 4px 8px;
+}
+.t-busca:focus { outline: none; border-color: var(--f-acento); }
+/* el gris por omision del navegador queda en 4,26:1 (claro) y 3,96:1 (oscuro) */
+.t-busca::placeholder, .t-num::placeholder, .t-faceta-q::placeholder,
+.t-pop input::placeholder { color: var(--f-txt-3); opacity: 1; }
+
+.t-barra .btn { white-space: nowrap; }
+.t-barra .btn.act { border-color: var(--f-acento); color: var(--f-acento);
+  background: var(--f-acento-sv); }
+/* hay un extremo de rango escrito que no se pudo leer, o un mín > máx: el
+   panel puede estar cerrado, así que el aviso tiene que verse en el botón */
+.t-barra .btn.t-mal { border-color: var(--f-alerta); color: var(--f-alerta); }
+.t-barra .btn.t-mal::after { content: " ⚠"; font-size: 11px; }
+
+.t-cuenta {
+  flex: 0 0 auto; margin-left: 4px; padding-left: 10px;
+  border-left: 1px solid var(--f-borde);
+  font-family: var(--f-mono); font-size: 11.5px; font-variant-numeric: tabular-nums;
+  color: var(--f-txt-2); white-space: nowrap;
+}
+.t-cuenta.t-filtrado { color: var(--f-acento); font-weight: 600; }
+
+/* --- paneles desplegables ------------------------------------------------ */
+.t-pop {
+  position: absolute; top: 100%; left: 0; right: 0; z-index: 40;
+  background: var(--f-panel); border: 1px solid var(--f-borde-fuerte);
+  border-top: 0; border-radius: 0 0 var(--f-r) var(--f-r);
+  box-shadow: var(--f-sombra);
+  max-height: 62vh; overflow: auto; padding: 10px 12px 14px;
+}
+.t-pop[hidden] { display: none; }
+.t-pop-cab { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.t-pop-cab strong { font-size: 12px; }
+.t-pop-acc { display: flex; gap: 5px; }
+.btn.t-mini { padding: 2px 7px; font-size: 11px; }
+
+/* columnas CSS en vez de rejilla: los bloques se empaquetan sin dejar huecos */
+.t-pop-rej { columns: 215px; column-gap: 20px; }
+.t-fil-rej {
+  display: grid; gap: 4px 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: start;
+}
+/* cada columna de filtros se desplaza sola: al bajar por las 341 comunas no se
+   pierden de vista los rangos ni las marcas */
+.t-pop-fil { overflow: hidden; }
+.t-fil-col { min-width: 0; max-height: calc(62vh - 42px); overflow-y: auto;
+  padding-right: 8px; }
+.t-fil-col h4 { position: sticky; top: 0; z-index: 2; background: var(--f-panel);
+  margin-top: 0; }
+
+.t-grupo { break-inside: avoid; margin-bottom: 8px; }
+.t-grupo h4, .t-fil-col h4 {
+  margin: 8px 0 4px; font-size: 10.5px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--f-txt-3);
+  border-bottom: 1px solid var(--f-borde); padding-bottom: 3px;
+}
+
+/* --- casillas ------------------------------------------------------------ */
+.t-chk {
+  display: flex; align-items: center; gap: 6px;
+  padding: 1px 2px; border-radius: 3px; cursor: pointer; font-size: 12px;
+  line-height: 1.5;
+}
+.t-chk:hover { background: var(--f-acento-sv); }
+.t-chk input { margin: 0; flex: 0 0 auto; accent-color: var(--f-acento); }
+.t-chk-n { flex: 1 1 auto; min-width: 0; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.t-chk-c { flex: 0 0 auto; font-family: var(--f-mono); font-size: 10.5px;
+  color: var(--f-txt-3); font-variant-numeric: tabular-nums; }
+.t-chk.t-cero { opacity: .42; }
+.t-chk.t-nulos { border-top: 1px dashed var(--f-borde); margin-top: 3px; padding-top: 3px; }
+.t-chk.t-nulos .t-chk-n { font-size: 11px; }
+/* en las facetas la casilla de NULL va arriba de la lista: el borde punteado
+   la separa de los valores, no del encabezado */
+.t-faceta > .t-chk.t-nulos {
+  border-top: 0; border-bottom: 1px dashed var(--f-borde);
+  margin: 0 0 3px; padding: 0 2px 3px;
+}
+
+/* --- facetas, rangos, booleanas ------------------------------------------ */
+.t-faceta, .t-rango, .t-bool {
+  margin-bottom: 10px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--f-borde);
+}
+.t-faceta-cab { display: flex; align-items: baseline; gap: 8px; margin-bottom: 3px; }
+.t-faceta-n { font-family: var(--f-mono); font-size: 11.5px; color: var(--f-txt);
+  font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* el chip de extremos es un botón: escribe los extremos EXACTOS en las
+   casillas, que el texto visible va redondeado a 3 decimales */
+/* el borde punteado permanente es lo que lo delata como pulsable: con el borde
+   transparente se leia como una etiqueta estatica y quien copiaba el texto a
+   mano se llevaba el valor redondeado sin saber por que perdia una fila */
+.t-faceta-ex { margin-left: auto; color: var(--f-txt-3); font-size: 10.5px;
+  background: none; border: 1px dashed var(--f-borde-fuerte); border-radius: 3px;
+  padding: 0 4px; cursor: pointer; white-space: nowrap; }
+.t-faceta-ex:hover { color: var(--f-acento); border-color: var(--f-acento); }
+.t-faceta-ex:focus-visible { outline: 2px solid var(--f-sel); outline-offset: 1px; }
+.t-x { margin-left: auto; background: none; border: 0; padding: 0 2px;
+  cursor: pointer; font-size: 10.5px; color: var(--f-txt-3); }
+.t-x:hover { color: var(--f-acento); text-decoration: underline; }
+
+.t-faceta-q {
+  width: 100%; font: inherit; font-size: 11.5px; color: var(--f-txt);
+  background: var(--f-bg); border: 1px solid var(--f-borde);
+  border-radius: 3px; padding: 2px 6px; margin: 2px 0 3px;
+}
+.t-faceta-q:focus { outline: none; border-color: var(--f-acento); }
+.t-vals { max-height: 168px; overflow: auto; }
+
+.t-rango-in { display: flex; align-items: center; gap: 6px; margin: 3px 0; }
+.t-num {
+  flex: 1 1 0; min-width: 0; width: 100%;
+  font-family: var(--f-mono); font-size: 11.5px; color: var(--f-txt);
+  background: var(--f-bg); border: 1px solid var(--f-borde-fuerte);
+  border-radius: 3px; padding: 2px 6px; text-align: right;
+}
+.t-num:focus { outline: none; border-color: var(--f-acento); }
+.t-sep { color: var(--f-txt-3); }
+/* extremo escrito que NO se está aplicando: la casilla no puede seguir
+   pareciendo un filtro vigente */
+.t-num.t-num-mal { border-color: var(--f-alerta); color: var(--f-alerta);
+  background: var(--f-bg); }
+.t-rango-aviso {
+  margin: 2px 0 1px; font-size: 10.5px; line-height: 1.4;
+  color: var(--f-alerta); border-left: 2px solid var(--f-alerta);
+  padding-left: 6px;
+}
+.t-rango-aviso[hidden] { display: none; }
+
+.t-tri { display: flex; margin: 3px 0; }
+.t-tri-b {
+  flex: 1 1 0; background: var(--f-panel); border: 1px solid var(--f-borde-fuerte);
+  padding: 2px 4px; font-size: 11px; cursor: pointer; color: var(--f-txt-2);
+}
+.t-tri-b:first-child { border-radius: 3px 0 0 3px; }
+.t-tri-b:last-child { border-radius: 0 3px 3px 0; }
+.t-tri-b + .t-tri-b { border-left: 0; }
+.t-tri-b:hover { color: var(--f-acento); }
+.t-tri-b.act { background: var(--f-acento-sv); color: var(--f-acento);
+  border-color: var(--f-acento); font-weight: 600; }
+
+/* --- tabla virtualizada -------------------------------------------------- */
+.t-scroll {
+  flex: 1 1 auto; min-height: 0; overflow: auto; position: relative;
+  background: var(--f-panel); outline: none;
+}
+.t-scroll:focus-visible { box-shadow: inset 0 0 0 2px var(--f-sel); }
+
+.t-cab {
+  position: sticky; top: 0; z-index: 10; display: flex;
+  background: var(--f-panel); border-bottom: 1px solid var(--f-borde-fuerte);
+  height: 26px;
+}
+.t-th {
+  flex: 0 0 auto; display: flex; align-items: center; gap: 3px;
+  padding: 0 7px; cursor: pointer; user-select: none;
+  font-family: var(--f-mono); font-size: 10.5px; color: var(--f-txt-2);
+  border-right: 1px solid var(--f-borde); overflow: hidden;
+}
+.t-th:hover { color: var(--f-acento); background: var(--f-acento-sv); }
+.t-th.t-ord { color: var(--f-acento); font-weight: 700; }
+.t-th-n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.t-th-o { flex: 0 0 auto; font-size: 8px; }
+.t-th.t-der { justify-content: flex-end; }
+.t-th.t-der .t-th-o { order: -1; }
+
+.t-cuerpo { position: relative; }
+
+.t-fila {
+  position: absolute; left: 0; display: flex; height: 24px; width: 100%;
+  border-bottom: 1px solid var(--f-borde); cursor: default;
+  contain: layout style;
+}
+.t-fila:hover { background: var(--f-acento-sv); }
+.t-fila.t-hov { background: var(--f-acento-sv); }
+.t-fila.t-sel { background: var(--f-sel-sv); box-shadow: inset 2px 0 0 var(--f-sel); }
+
+.t-cel {
+  flex: 0 0 auto; padding: 0 7px; line-height: 23px; font-size: 12px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  border-right: 1px solid var(--f-borde);
+}
+.t-cel.t-der { text-align: right; }
+/* NULL: la celda queda sin texto (textContent === "" a propósito, no se
+   escribe ningún valor sustituto) y se marca con un recuadro tachado DIBUJADO
+   con bordes y un degradado, no con un carácter.
+   Antes se pintaba una semirraya "–", y esta base contiene la raya COMO VALOR
+   declarado por Vialidad: rol, rol_id y codigo_camino valen "-" en los tramos
+   --1-1 y --1-2, entre otros. En una misma fila convivían un "-" que es dato y
+   un "–" que es ausencia de dato, separados sólo por el color y por el largo
+   del trazo. Un recuadro tachado no es un carácter que la base pueda contener,
+   así que no hay lectura ambigua posible; el hover lo dice además con palabras. */
+.t-cel.vacio::after {
+  content: "";
+  display: inline-block; width: 11px; height: 11px; vertical-align: -1px;
+  border: 1px solid var(--f-nulo); border-radius: 2px;
+  background: linear-gradient(to top right,
+    transparent calc(50% - .8px), var(--f-nulo) calc(50% - .8px),
+    var(--f-nulo) calc(50% + .8px), transparent calc(50% + .8px));
+  opacity: .85;
+}
+.t-fila.t-sel .t-cel.vacio::after,
+.t-fila:hover .t-cel.vacio::after { opacity: 1; }
+
+@media (max-width: 900px) {
+  .t-pop { max-height: 50vh; }
+  .t-cuenta { border-left: 0; padding-left: 0; }
+}
+
+/* filtro que restringe pero conserva los NULL: se hace visible */
+.t-chk.t-nulos-avisa { background: var(--f-acento-sv); }
+.t-chk.t-nulos-avisa .t-chk-n,
+.t-chk.t-nulos-avisa .t-chk-c { color: var(--f-acento); font-weight: 600; }
+
+/* celda fuera de la ventana horizontal: sin texto y SIN el guión de NULL,
+   para no confundir "no dibujado" con "sin dato" */
+.t-cel.t-off::after { content: none; }
+
+/* resultado vacío: el texto lo escribe describirVacio() según la causa real
+   (rango imposible, NULL excluidos, búsqueda sin coincidencias, combinación),
+   así que puede ser largo y va alineado a la izquierda para poder leerse */
+.t-vacio {
+  position: absolute; left: 50%; top: 45%; transform: translate(-50%, -50%);
+  max-width: min(540px, 88%); padding: 14px 16px; text-align: left; line-height: 1.55;
+  color: var(--f-txt-2); font-size: 12px;
+  background: var(--f-panel); border: 1px solid var(--f-borde-fuerte);
+  border-radius: var(--f-r); box-shadow: var(--f-sombra); z-index: 5;
+}
+.t-vacio[hidden] { display: none; }
+
+/* --- criterio geomorfologico de inclusion (disyuncion kapos / portezuelo) --- */
+.t-crit { border-bottom: 1px solid var(--f-borde); padding: 2px 0 10px; margin-bottom: 8px; }
+.t-crit-cab { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 4px; }
+.t-crit-def { font-family: var(--f-mono); font-size: 11px; color: var(--f-txt-3); }
+.t-crit .t-tri { max-width: 560px; }
+.t-crit .t-tri-b { flex: 1 1 auto; white-space: nowrap; }

@@ -1,0 +1,124 @@
+/* === mapa.css ===============================================================
+   Estilos del panel de mapa.
+
+   Nota sobre color: estilo_base.css no define una paleta cartografica (no puede:
+   son 15 tokens de interfaz). Aqui se agregan tokens PROPIOS del mapa, con las
+   mismas tres declaraciones de tema que usa estilo_base (claro, preferencia del
+   sistema, y data-tema="oscuro"), para que mapa.js NUNCA lleve un color escrito
+   en el codigo: los lee todos con getComputedStyle. El color de NULL en el
+   lienzo y en las muestras de la leyenda es --f-nulo-graf (el gris claro de
+   grafico); --f-nulo, que ahora cumple 4.5:1, se usa solo para el TEXTO
+   "sin dato (NULL)".
+   ========================================================================== */
+:root{
+  /* rampa secuencial de 7 pasos, oro -> purpura, luminosidad decreciente
+     (legible sobre el fondo claro del mapa) */
+  --m-seq-0:#d9b229; --m-seq-1:#d26a22; --m-seq-2:#b93f28; --m-seq-3:#9b2745;
+  --m-seq-4:#7e2461; --m-seq-5:#5f2270; --m-seq-6:#3a1c6e;
+  /* paleta categorica de 12 */
+  --m-cat-0:#1f6f8b;  --m-cat-1:#b3542a;  --m-cat-2:#4a7a2b;  --m-cat-3:#8a4f9e;
+  --m-cat-4:#a8862a;  --m-cat-5:#b2405f;  --m-cat-6:#2f6f66;  --m-cat-7:#6b6ab5;
+  --m-cat-8:#8c6239;  --m-cat-9:#4d7fbd;  --m-cat-10:#7a8c2a; --m-cat-11:#b0567f;
+  /* linea sin variable de color, y linea de los tramos excluidos por el filtro */
+  --m-linea:#5c5850;
+  --m-fuera:#b6b0a4;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-tema="claro"]){
+    --m-seq-0:#c79b23; --m-seq-1:#dc7a33; --m-seq-2:#e6614f; --m-seq-3:#e3708f;
+    --m-seq-4:#e894cb; --m-seq-5:#dcaaea; --m-seq-6:#c7b3f6;
+    --m-cat-0:#5fb6d6;  --m-cat-1:#e08a4f;  --m-cat-2:#7fc45a;  --m-cat-3:#c08fe0;
+    --m-cat-4:#ddb44f;  --m-cat-5:#eb7a95;  --m-cat-6:#58bfae;  --m-cat-7:#9a9aee;
+    --m-cat-8:#c79868;  --m-cat-9:#7db2f0;  --m-cat-10:#b8ca55; --m-cat-11:#e585b0;
+    --m-linea:#9a958b;
+    --m-fuera:#403d37;
+  }
+}
+:root[data-tema="oscuro"]{
+  --m-seq-0:#c79b23; --m-seq-1:#dc7a33; --m-seq-2:#e6614f; --m-seq-3:#e3708f;
+  --m-seq-4:#e894cb; --m-seq-5:#dcaaea; --m-seq-6:#c7b3f6;
+  --m-cat-0:#5fb6d6;  --m-cat-1:#e08a4f;  --m-cat-2:#7fc45a;  --m-cat-3:#c08fe0;
+  --m-cat-4:#ddb44f;  --m-cat-5:#eb7a95;  --m-cat-6:#58bfae;  --m-cat-7:#9a9aee;
+  --m-cat-8:#c79868;  --m-cat-9:#7db2f0;  --m-cat-10:#b8ca55; --m-cat-11:#e585b0;
+  --m-linea:#9a958b;
+  --m-fuera:#403d37;
+}
+
+.mapa-raiz{position:absolute;inset:0;overflow:hidden;font-size:11.5px;color:var(--f-txt)}
+.mapa-lienzo,.mapa-encima{position:absolute;inset:0;width:100%;height:100%;display:block}
+.mapa-lienzo{cursor:crosshair;touch-action:none}
+.mapa-encima{pointer-events:none}
+
+.mapa-caja{position:absolute;background:var(--f-panel);border:1px solid var(--f-borde);
+  border-radius:var(--f-r);box-shadow:var(--f-sombra)}
+
+/* --- control de color + leyenda ----------------------------------------- */
+.mapa-color{top:8px;left:8px;width:222px;max-height:calc(100% - 76px);
+  display:flex;flex-direction:column;min-height:0}
+.mapa-color-cab{display:flex;align-items:center;gap:6px;padding:6px 8px;
+  border-bottom:1px solid var(--f-borde);flex:0 0 auto}
+.mapa-color-cab label{color:var(--f-txt-3);font-size:10.5px;text-transform:uppercase;
+  letter-spacing:.05em;white-space:nowrap}
+.mapa-color select{flex:1;min-width:0;background:var(--f-panel);color:var(--f-txt);
+  border:1px solid var(--f-borde-fuerte);border-radius:4px;padding:2px 4px;
+  font-family:var(--f-sans);font-size:11.5px}
+.mapa-color select:focus{outline:1px solid var(--f-acento);outline-offset:0}
+
+.mapa-leyenda{overflow:auto;padding:5px 8px 6px;min-height:0;flex:1 1 auto}
+.mapa-ley-fila{display:flex;align-items:center;gap:6px;padding:1.5px 0;line-height:1.3}
+.mapa-ley-sw{flex:0 0 auto;width:16px;height:3px;border-radius:2px}
+.mapa-ley-tx{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;font-size:11px}
+.mapa-ley-n{flex:0 0 auto;color:var(--f-txt-3);font-family:var(--f-mono);font-size:10px;
+  font-variant-numeric:tabular-nums}
+.mapa-ley-sep{border-top:1px dashed var(--f-borde);margin:5px 0 4px}
+.mapa-ley-nota{color:var(--f-txt-3);font-size:10px;line-height:1.35;margin-top:5px}
+.mapa-ley-fila.nulo .mapa-ley-tx{color:var(--f-nulo)}
+.mapa-ley-fila.fuera{cursor:pointer;user-select:none}
+.mapa-ley-fila.fuera .mapa-ley-tx{color:var(--f-txt-3)}
+.mapa-ley-fila.fuera.apagada .mapa-ley-sw{opacity:.25}
+.mapa-ley-fila.fuera:hover .mapa-ley-tx{color:var(--f-acento)}
+/* seleccionado que el filtro excluye: la muestra repite el trazo discontinuo con
+   que se dibuja en el lienzo. El color llega en --sw desde mapa.js (leido de
+   --f-sel), para no escribirlo aqui dos veces. */
+.mapa-ley-fila.sel-fuera .mapa-ley-tx{color:var(--f-txt-2)}
+.mapa-ley-sw.disc{background:repeating-linear-gradient(90deg,
+  var(--sw,var(--f-sel)) 0 5px,transparent 5px 8px)}
+
+/* --- botones de zoom ----------------------------------------------------- */
+.mapa-zoom{top:8px;right:8px;display:flex;flex-direction:column;padding:3px;gap:2px}
+.mapa-zoom button{width:26px;height:24px;background:transparent;border:0;border-radius:4px;
+  cursor:pointer;font-size:12px;line-height:1;color:var(--f-txt-2);padding:0;
+  font-family:var(--f-sans)}
+.mapa-zoom button:hover{background:var(--f-acento-sv);color:var(--f-acento)}
+.mapa-zoom .sep{height:1px;background:var(--f-borde);margin:2px 1px}
+.mapa-zoom .chico{font-size:10px;letter-spacing:.02em}
+
+/* --- pie: escala grafica y nota ----------------------------------------- */
+.mapa-pie{left:8px;bottom:8px;padding:5px 8px;display:flex;align-items:center;gap:10px;
+  background:var(--f-panel);opacity:.94}
+.mapa-escala{display:flex;flex-direction:column;gap:2px}
+.mapa-escala-b{height:6px;border:1px solid var(--f-txt-2);border-top:0;box-sizing:border-box}
+.mapa-escala-t{font-family:var(--f-mono);font-size:10px;color:var(--f-txt-2);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.mapa-nota{color:var(--f-txt-3);font-size:10px;line-height:1.3;max-width:200px}
+
+/* --- tooltip ------------------------------------------------------------- */
+.mapa-tt{position:absolute;z-index:20;pointer-events:none;max-width:280px;
+  background:var(--f-panel);border:1px solid var(--f-borde-fuerte);border-radius:var(--f-r);
+  box-shadow:var(--f-sombra);padding:5px 8px;font-size:11.5px;line-height:1.4;
+  display:none}
+.mapa-tt.visible{display:block}
+.mapa-tt .id{font-family:var(--f-mono);font-size:10.5px;color:var(--f-txt-3)}
+.mapa-tt .nom{font-weight:600;display:block;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap}
+.mapa-tt .l2{color:var(--f-txt-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mapa-tt .vacio{color:var(--f-nulo)}
+
+.mapa-aviso{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  color:var(--f-txt-3);font-size:12px;text-align:center;pointer-events:none}
+
+@media (max-width:900px){
+  .mapa-color{width:180px;max-height:calc(100% - 70px)}
+  .mapa-nota{display:none}
+}

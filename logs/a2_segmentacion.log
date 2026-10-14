@@ -1,0 +1,26 @@
+2026-08-26 19:42:31 UTC | Inicio A2
+2026-08-26 19:42:31 UTC | fecha FT-01 = 2026-08-26 | fecha FT-05 = 2026-08-26 | sha256 comunas (manifest) = 5bea4b6337ce26124813d93aa4f13ffd3db44eca6cb2c693096b4afc391e9d5c
+2026-08-26 19:42:31 UTC | sha256 de comunas_2017.geojson verificado contra manifest
+2026-08-26 19:42:33 UTC | A1: 13945 tramos, geometría sfc_MULTILINESTRING, Z presente = TRUE
+2026-08-26 19:42:34 UTC | Comunas: 345 polígonos; válidos = 345
+2026-08-26 19:42:36 UTC | utm_zona: 18 = 6020 | 19 = 7925
+2026-08-26 19:42:41 UTC | longitud padre calculada; min = 0.31 m, max = 323124 m
+2026-08-26 19:42:45 UTC | tramos por n° de comunas intersectadas: 0 = 0 | 1 = 12315 | >=2 = 1630
+2026-08-26 19:42:45 UTC | candidatos a corte (>= 2 comunas): 1630
+2026-08-26 19:42:50 UTC |   corte 200/1630 (194 subdivididos)
+2026-08-26 19:42:54 UTC |   corte 400/1630 (371 subdivididos)
+2026-08-26 19:42:59 UTC |   corte 600/1630 (547 subdivididos)
+2026-08-26 19:43:04 UTC |   corte 800/1630 (731 subdivididos)
+2026-08-26 19:43:11 UTC |   corte 1000/1630 (924 subdivididos)
+2026-08-26 19:43:16 UTC |   corte 1200/1630 (1111 subdivididos)
+2026-08-26 19:43:20 UTC |   corte 1400/1630 (1286 subdivididos)
+2026-08-26 19:43:25 UTC |   corte 1600/1630 (1470 subdivididos)
+2026-08-26 19:43:26 UTC | corte terminado en 41 s | subdivididos = 1499 | candidatos no subdivididos tras fusión = 131 | residuos < 20 m fundidos = 552 | distancia máx. punto de corte a la línea = 0.0416 m
+2026-08-26 19:43:38 UTC | Σ hijos vs padre: max |delta| = 1.48e-08% | padres con |delta| > 1 % = 0
+2026-08-26 19:43:38 UTC | hijos por padre: 2 hijos= 960 | 3 hijos= 159 | 4 hijos= 102 | 5 hijos= 39 | 6 hijos= 48 | 7 hijos= 26 | 8 hijos= 28 | 9 hijos= 25 | 10 hijos= 12 | 11 hijos= 14 | 12 hijos= 11 | 13 hijos= 12 | 14 hijos= 7 | 15 hijos= 6 | 16 hijos= 5 | 17 hijos= 7 | 18 hijos= 3 | 19 hijos= 3 | 20 hijos= 6 | 21 hijos= 5 | 22 hijos= 3 | 23 hijos= 2 | 24 hijos= 1 | 25 hijos= 1 | 26 hijos= 1 | 27 hijos= 1 | 28 hijos= 1 | 30 hijos= 2 | 31 hijos= 2 | 32 hijos= 1 | 39 hijos= 1 | 46 hijos= 1 | 55 hijos= 2 | 59 hijos= 1 | 68 hijos= 1
+2026-08-26 19:43:38 UTC | Z conservada en hijos: TRUE
+2026-08-26 19:43:40 UTC | escrito ./data/interim/a2_tramos.gpkg (18368 filas)
+2026-08-26 19:43:40 UTC | procedencia: 121254 filas
+2026-08-26 19:43:40 UTC | pendientes: 7322 filas (hijos sin km = 5922, km_tramo=0 = 1400, fuera_de_comunas = 0)
+2026-08-26 19:43:40 UTC | RESUMEN | entrada 13945 | salida 18368 | subdivididos 1499 padres → 5922 hijos | motivo_corte: cambio_comuna 5922, original 12446 | utm_zona: 18=8624 19=9744 | delta_longitud_pct (n=11046): mediana -0.121%, p95 |delta| 1.1%, n |delta|>10% = 76 | tiempo 1.2 min
+2026-08-26 19:43:40 UTC | Fin A2

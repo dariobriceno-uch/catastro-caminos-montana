@@ -1,0 +1,16 @@
+== Validación etapa visor — 2026-08-27 09:42:45 ==
+Raíz: .
+[PASS] VISOR: el payload tiene las mismas filas y columnas que el parquet
+[PASS] VISOR: cada columna del payload reproduce el parquet valor a valor
+[PASS] VISOR: los NULL del parquet siguen siendo NULL en el payload
+[PASS] VISOR: la procedencia del payload coincide con procedencia.parquet
+[PASS] VISOR: el método declarado está en el dominio de la Regla 2
+[PASS] VISOR: la geometría no se desalinea de las filas
+[PASS] VISOR: el primer vértice de cada tramo cae sobre coord_inicio
+[PASS] VISOR: la extensión del catastro es la de Chile continental
+[PASS] VISOR: el HTML es autocontenido — ninguna referencia a la red
+[PASS] VISOR: el HTML declara el sha256 del parquet del que salió
+[PASS] VISOR: el HTML no queda desactualizado respecto del parquet
+
+Resumen visor: 11 PASS, 0 FAIL, 0 SKIP (de 11 aserciones)
+ESTADO ETAPA VISOR: PASS

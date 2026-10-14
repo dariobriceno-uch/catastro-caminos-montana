@@ -1,0 +1,19 @@
+== Validación etapa a5 — 2026-08-26 15:55:14 ==
+Raíz: .
+[PASS] A5: columnas requeridas presentes (id_tramo + bloque A5)
+[PASS] A5: no escribe columnas de otros bloques
+[PASS] A5: exactamente una fila por id_tramo de A2
+[PASS] A5: tmda no nulo ⇒ punto_censal_id, tmda_anio, dist_punto_censal_m, match_metodo no nulos
+[PASS] A5: tmda_invierno o tmda_composicion no nulos ⇒ punto_censal_id no nulo
+[PASS] A5: match_metodo en dominio {espacial, rol_kilometraje}
+[PASS] A5: tmda_anio <= 2019 (vigencia declarada FT-02); años mayores se reportan como hallazgo
+[PASS] A5: tmda, tmda_invierno >= 0 y enteros cuando no nulos
+[PASS] A5: dist_punto_censal_m >= 0 cuando no nulo; distancias > 10 km se reportan
+[PASS] A5: match_metodo = espacial ⇒ dist_punto_censal_m no nulo
+[PASS] A5: procedencia — columnas, dominio de metodo, fuente FT-02
+[PASS] A5: metodo por campo según esquema
+[PASS] A5: toda celda no nula del bloque A5 tiene exactamente una fila de procedencia
+[PASS] A5: toda celda NULL del bloque A5 tiene fila en pendientes_a5.csv
+
+Resumen a5: 14 PASS, 0 FAIL, 0 SKIP (de 14 aserciones)
+ESTADO ETAPA A5: PASS

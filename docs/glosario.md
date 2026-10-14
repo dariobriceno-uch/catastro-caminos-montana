@@ -1,0 +1,32 @@
+## Glosario
+
+- **Tramo.** La unidad de esta base. Un camino se guarda partido en pedazos (tramos), no como una sola fila. Cada fila describe un pedazo con inicio y fin definidos.
+- **Rol.** Código oficial con que Vialidad identifica un camino público ("Ruta 5", "G-21"). Es el "apellido" del camino; el nombre de uso común puede ser otro.
+- **Vialidad (MOP).** Dirección de Vialidad del Ministerio de Obras Públicas, organismo a cargo de los caminos públicos y fuente de la red vial usada aquí.
+- **Carpeta.** Superficie de rodado del camino: pavimento, ripio (grava), suelo natural (tierra), etc.
+- **msnm.** Metros sobre el nivel del mar: la altitud. Todas las cotas de la base están en msnm.
+- **Cota.** Altitud de un punto. En esta base, siempre la del camino, nunca la de una cumbre cercana.
+- **DEM / modelo digital de elevación.** Un mapa en cuadrícula donde cada celda tiene una altitud. Se usó Copernicus GLO-30, con celdas de 30 m. Es un modelo de superficie: en zonas boscosas puede leer la copa de los árboles en vez del suelo.
+- **Perfil de altitud.** La secuencia de altitudes a lo largo del camino, obtenida leyendo el DEM cada 30 m sobre el trazado.
+- **Pendiente.** Inclinación del camino, en grados. 5° ≈ 9 %, 10° ≈ 18 %, 15° ≈ 27 %.
+- **Desnivel acumulado.** Suma de todo lo que se sube (o baja) a lo largo del tramo, contando cada cuesta.
+- **Portezuelo.** Paso de montaña: punto alto del camino desde el que se desciende hacia ambos lados. Aquí se exige un descenso de más de 200 m a cada lado.
+- **Clasificación de Kapos.** Sistema usado por Naciones Unidas (UNEP-WCMC) para definir qué es montaña, combinando altitud, pendiente y relieve del entorno. Clases 1 a 6; 1 es la más alta (sobre 4.500 m). En esta base, clase 0 significa "no cumple ninguna condición de montaña".
+- **Orientación de ladera (aspecto).** Hacia qué punto cardinal mira la pendiente del terreno. En Chile, las laderas que miran al sur reciben menos sol.
+- **Sinuosidad.** Cuánto serpentea el camino: longitud real dividida por la distancia en línea recta. 1 = recta.
+- **Paso fronterizo.** Punto autorizado para cruzar la frontera, según DIFROL. No todos son vehiculares.
+- **DIFROL.** Dirección Nacional de Fronteras y Límites del Estado, fuente de los pasos, el límite internacional y la zona fronteriza.
+- **Zona fronteriza.** Franja del territorio junto a la frontera donde ciertos actos (compra de tierras, obras) requieren autorización de DIFROL. Es una categoría administrativa, no geográfica.
+- **INE.** Instituto Nacional de Estadísticas, fuente de los límites comunales y de las localidades pobladas (Censo 2017).
+- **Localidad poblada.** Entidad del INE con población: ciudad, pueblo, aldea o caserío, en orden decreciente de tamaño y servicios.
+- **SERNATUR.** Servicio Nacional de Turismo, fuente del inventario de atractivos turísticos del que se tomaron los centros de esquí.
+- **TMDA.** Tránsito Medio Diario Anual: promedio de vehículos por día que pasa por un punto de conteo. Lo mide Vialidad en su Plan Nacional de Censos, con muestras en febrero, junio y octubre.
+- **Punto censal / estación de conteo.** Lugar fijo donde Vialidad cuenta vehículos. No está sobre cada camino; por eso se guarda la distancia entre el tramo y la estación.
+- **Cruce espacial (spatial join).** Operación de mapas que relaciona dos capas por su posición: por ejemplo, "en qué comuna cae este tramo" o "qué paso está a menos de 500 m".
+- **Buffer.** Radio alrededor de un objeto usado en un cruce espacial ("a menos de 500 m").
+- **UTM.** Sistema de coordenadas en metros usado para medir distancias y longitudes con precisión. Chile continental abarca las zonas 18 y 19.
+- **WGS84 / lon-lat.** Sistema de coordenadas en grados (el de los GPS y Google Maps).
+- **Fuente FT-xx.** Código de cada fuente de datos en `docs/fuentes.md` (FT-01 Vialidad, FT-02 censos de tránsito, FT-03 DIFROL, FT-05 INE, FT-06 SERNATUR, FT-07 DEM, FT-09 Kapos).
+- **Método.** Cómo se obtuvo cada valor: `declarado` (copiado tal cual de la fuente), `derivado` (calculado por código sobre la fuente), `estimado` (con un supuesto o geometría añadida, documentados).
+- **NULL.** Celda vacía: el valor no se pudo obtener de ninguna fuente. Cada NULL tiene su motivo en `data/pendientes.csv`. Una celda vacía es un resultado válido; una inventada invalidaría el catastro.
+- **Procedencia.** Tabla que registra, para cada celda con valor, de qué fuente, en qué fecha y con qué método se obtuvo.

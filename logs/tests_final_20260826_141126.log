@@ -1,0 +1,8 @@
+== Validación etapa final — 2026-08-26 14:11:26 ==
+Raíz: .
+SKIP: la etapa no puede validarse todavía; faltan insumos:
+  - data/processed/tramos.parquet
+  - data/processed/procedencia.parquet
+  - data/pendientes.csv
+(Ninguna aserción ejecutada. Esto NO es un PASS: la etapa sigue abierta.)
+ESTADO ETAPA FINAL: SKIP (sin insumos)

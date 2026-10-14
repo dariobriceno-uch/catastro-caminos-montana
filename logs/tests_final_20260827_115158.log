@@ -1,0 +1,20 @@
+== Validación etapa final — 2026-08-27 11:51:58 ==
+Raíz: .
+[PASS] FINAL: columnas exactamente las del esquema (ORQ + A1..A5; llaves de trazabilidad opcionales)
+[PASS] FINAL: id_tramo único y no nulo
+[PASS] FINAL: procedencia con columnas exactas y dominios
+[PASS] FINAL: procedencia no usa id_tramo_a1 sin remapear (todo id_tramo de procedencia existe en tramos)
+[PASS] FINAL: toda celda no nula tiene exactamente una fila de procedencia y ninguna de más
+[PASS] FINAL: pendientes.csv con columnas exactas del protocolo
+[PASS] FINAL: cada (id_tramo, campo) NULL en columnas de datos tiene fila en pendientes o bloque completo marcado *
+[PASS] FINAL: en_lista_colega es NULL en todas las filas si reference/candidatos_colega.xlsx no existe
+[SKIP] FINAL: en_lista_colega nunca tiene fila de procedencia con fuente distinta del propio archivo de referencia
+         motivo: Reason: sin filas
+[PASS] FINAL: consistencia interna de A2/A3 reensamblada (longitud > 0, cota_min<=media<=max)
+[SKIP] FINAL: una sola altitud por objeto: cota_max del tramo no fue sobrescrita por esqui_cota_base
+         motivo: Reason: sin tramos de esquí con ambas cotas
+[PASS] FINAL: agregados regionales recalculados coinciden con logs/agregados_regionales.csv
+[PASS] FINAL: ningún porcentaje 'nacional' en logs sin base completa (heurístico: se reporta)
+
+Resumen final: 11 PASS, 0 FAIL, 2 SKIP (de 13 aserciones)
+ESTADO ETAPA FINAL: PASS con saltos
