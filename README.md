@@ -6,7 +6,7 @@ Este repositorio contiene un catastro nacional de la red vial de montaña de Chi
 
 El visor es un archivo HTML autocontenido: [`docs/visor_tramos.html`](docs/visor_tramos.html). Muestra los 18.368 tramos con tabla filtrable, mapa y ficha por tramo, y cada valor indica su fuente, fecha y método de obtención. Se abre con doble clic en cualquier navegador moderno y no necesita servidor, internet ni instalación.
 
-GitHub no muestra un HTML como página. Para verlo hay que descargar el archivo (botón *Download raw file*) y abrirlo en el navegador.
+También se puede ver en línea en **https://dariobriceno-uch.github.io/catastro-caminos-montana/**, publicado con GitHub Pages desde la carpeta `docs/`. El libro de códigos está en https://dariobriceno-uch.github.io/catastro-caminos-montana/libro_codigos.html.
 
 ## Construcción
 
