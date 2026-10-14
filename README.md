@@ -10,7 +10,7 @@ GitHub no muestra un HTML como página. Para verlo hay que descargar el archivo 
 
 ## Construcción
 
-La construcción sigue una regla de procedencia estricta. Ningún valor entra a la base si no se deriva por código de un archivo descargado de la fuente oficial, y cada celda registra la fuente, la fecha de descarga y el método con que se obtuvo. Cuando un valor no puede derivarse, la celda queda vacía y el caso se registra con su motivo en `data/pendientes.csv`. Cada etapa se cerró solo después de superar un conjunto de pruebas automáticas.
+La construcción sigue una regla de procedencia estricta. Ningún valor entra a la base si no se deriva por código de un archivo descargado de la fuente oficial, y cada celda registra la fuente, la fecha de descarga y el método con que se obtuvo. Cuando un valor no puede derivarse, la celda queda vacía y el caso se registra con su motivo en `data/vacios.csv`. Cada etapa se cerró solo después de superar un conjunto de pruebas automáticas.
 
 Con el criterio geomorfológico (clases 1 a 5 de Kapos o cruce de un portezuelo), 1.458 tramos califican como tramos de montaña. Suman 22.073 km y pertenecen a 643 caminos con rol identificable.
 
@@ -30,7 +30,7 @@ Las reglas de construcción están en [`REGLAS.md`](REGLAS.md), el esquema de co
 ├── data/
 │   ├── raw/             insumos descargados de las fuentes oficiales
 │   ├── processed/       base final: tramos.parquet, tramos.gpkg, tramos.xlsx, procedencia.parquet
-│   └── pendientes.csv   valores que no pudieron derivarse, con su motivo
+│   └── vacios.csv       valores que no pudieron derivarse, con su motivo
 ├── docs/                esquema, fuentes, glosario, libro de códigos y visor
 └── logs/                registros de ejecución y de pruebas
 ```

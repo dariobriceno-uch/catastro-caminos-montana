@@ -305,7 +305,7 @@
     pie.appendChild(ui.notaMeta);
     pie.appendChild(el("p", "fi-nota fi-aviso",
       "Una celda vacía significa NULL en la base: el valor no se pudo derivar de " +
-      "data/raw/ y la fila quedó registrada en data/pendientes.csv. No es un cero, " +
+      "data/raw/ y la fila quedó registrada en data/vacios.csv. No es un cero, " +
       "ni un «sin información», ni un dato pendiente de digitar en el visor."));
     ui.pieProc = el("p", "fi-nota");
     pie.appendChild(ui.pieProc);
@@ -663,7 +663,7 @@
         "procedencia — procedencia.parquet registra una fila sólo por cada " +
         "valor presente —, así que este campo no lleva método, ni fuente, ni " +
         "fecha de descarga, ni agente. El motivo por el que no se pudo derivar " +
-        "queda en data/pendientes.csv."));
+        "queda en data/vacios.csv."));
     } else if (p) {
       const pares = [["fuente", p.fuente], ["fecha de descarga", p.fecha],
                      ["método", p.metodo], ["agente", p.agente]];

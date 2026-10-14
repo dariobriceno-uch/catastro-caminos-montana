@@ -3,7 +3,7 @@
 a4   <- leer_parquet(rp("data/interim/a4_destinos.parquet"))
 a2df <- sin_geom(leer_gpkg(rp("data/interim/a2_tramos.gpkg")))
 proc <- leer_parquet(rp("data/interim/procedencia_a4.parquet"))
-pend <- leer_csv(rp("data/interim/pendientes_a4.csv"))
+pend <- leer_csv(rp("data/interim/vacios_a4.csv"))
 a3   <- if (file.exists(rp("data/interim/a3_altimetria.parquet"))) leer_parquet(rp("data/interim/a3_altimetria.parquet")) else NULL
 
 # Capa cruda FT-03a (pasos), para la altitud del paso extraída una sola vez.
@@ -164,12 +164,12 @@ test_that("A4: toda celda no nula del bloque A4 tiene exactamente una fila de pr
                              nrow(d$sobrantes), resumen_vector(d$campos_fuera)))
 })
 
-test_that("A4: toda celda NULL del bloque A4 tiene fila en pendientes_a4.csv", {
+test_that("A4: toda celda NULL del bloque A4 tiene fila en vacios_a4.csv", {
   falt <- character()
   for (cc in COLS_A4) {
     nul <- es_nulo(a4[[cc]])
     if (any(nul)) {
-      cub <- pendiente_cubre(pend, a4$id_tramo[nul], cc)
+      cub <- vacio_cubre(pend, a4$id_tramo[nul], cc)
       if (any(!cub)) falt <- c(falt, sprintf("%s (%d)", cc, sum(!cub)))
     }
   }

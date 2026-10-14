@@ -5,7 +5,7 @@ suppressPackageStartupMessages(library(sf))
 a6   <- leer_parquet(rp("data/interim/a6_geomorf.parquet"))
 a2df <- sin_geom(leer_gpkg(rp("data/interim/a2_tramos.gpkg")))
 proc <- leer_parquet(rp("data/interim/procedencia_a6.parquet"))
-pend <- leer_csv(rp("data/interim/pendientes_a6.csv"))
+pend <- leer_csv(rp("data/interim/vacios_a6.csv"))
 
 shp <- list.files(rp("data/raw/Unidades Geomorfologicas"), pattern = "[.]shp$", full.names = TRUE)
 crudo <- if (length(shp)) sf::st_drop_geometry(sf::st_read(shp[1], quiet = TRUE)) else NULL
@@ -69,7 +69,7 @@ test_that("A6: procedencia FT-10 / derivado / A6, una fila por celda con valor",
   }
 })
 
-test_that("A6: todo NULL está en pendientes con motivo", {
+test_that("A6: todo NULL está en vacíos con motivo", {
   nulos <- a6$id_tramo[es_nulo(a6$unidad_geomorf)]
   expect_true(all(nulos %in% pend$id_tramo[pend$campo == "unidad_geomorf"]),
               info = resumen_vector(setdiff(nulos, pend$id_tramo)))

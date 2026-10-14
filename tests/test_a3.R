@@ -3,7 +3,7 @@
 a3   <- leer_parquet(rp("data/interim/a3_altimetria.parquet"))
 a2df <- sin_geom(leer_gpkg(rp("data/interim/a2_tramos.gpkg")))
 proc <- leer_parquet(rp("data/interim/procedencia_a3.parquet"))
-pend <- leer_csv(rp("data/interim/pendientes_a3.csv"))
+pend <- leer_csv(rp("data/interim/vacios_a3.csv"))
 mans <- leer_manifests_todos()
 
 COTAS <- c("cota_min", "cota_max", "cota_media", "cota_culminante")
@@ -54,7 +54,7 @@ test_that("A3: cota_min <= cota_media <= cota_max en toda fila no nula", {
   expect_true(length(malos) == 0, info = resumen_vector(malos))
 })
 
-test_that("A3: cota_culminante == cota_max (o documentado en pendientes/hallazgo)", {
+test_that("A3: cota_culminante == cota_max (o documentado en vacíos/hallazgo)", {
   s <- nn(a3$cota_culminante, a3$cota_max)
   dif <- a3$id_tramo[s][abs(a3$cota_culminante[s] - a3$cota_max[s]) > 0.01]
   # Esquema: coinciden salvo tramos con más de un máximo local. En ese caso
@@ -134,21 +134,21 @@ test_that("A3: toda celda no nula del bloque A3 tiene exactamente una fila de pr
                              nrow(d$sobrantes), resumen_vector(d$campos_fuera)))
 })
 
-test_that("A3: toda fila con todas las cotas NULL tiene entrada en pendientes_a3.csv", {
+test_that("A3: toda fila con todas las cotas NULL tiene entrada en vacios_a3.csv", {
   todas_nulas <- apply(is.na(a3[intersect(COTAS, names(a3))]), 1, all)
   skip_if(!any(todas_nulas), "no hay filas sin cota")
   ids <- a3$id_tramo[todas_nulas]
-  cub <- pendiente_cubre(pend, ids, "cota_max") | pendiente_cubre(pend, ids, "cota_min") |
-         pendiente_cubre(pend, ids, "cota_media")
-  expect_true(all(cub), info = sprintf("%d filas sin cota y sin pendiente: %s", sum(!cub), resumen_vector(ids[!cub])))
+  cub <- vacio_cubre(pend, ids, "cota_max") | vacio_cubre(pend, ids, "cota_min") |
+         vacio_cubre(pend, ids, "cota_media")
+  expect_true(all(cub), info = sprintf("%d filas sin cota y sin vacío registrado: %s", sum(!cub), resumen_vector(ids[!cub])))
 })
 
-test_that("A3: toda celda NULL del bloque A3 tiene fila en pendientes_a3.csv", {
+test_that("A3: toda celda NULL del bloque A3 tiene fila en vacios_a3.csv", {
   falt <- character()
   for (cc in COLS_A3) {
     nul <- es_nulo(a3[[cc]])
     if (any(nul)) {
-      cub <- pendiente_cubre(pend, a3$id_tramo[nul], cc)
+      cub <- vacio_cubre(pend, a3$id_tramo[nul], cc)
       if (any(!cub)) falt <- c(falt, sprintf("%s (%d)", cc, sum(!cub)))
     }
   }

@@ -4,7 +4,7 @@
 #          data/interim/a2_tramos.gpkg                (geometría de los tramos)
 # Salida:  data/interim/a6_geomorf.parquet            id_tramo + columnas A6
 #          data/interim/procedencia_a6.parquet        formato largo
-#          data/interim/pendientes_a6.csv
+#          data/interim/vacios_a6.csv
 #
 # Columnas que escribe (docs/esquema.md, bloque A6):
 #   unidad_geomorf    nombre de la unidad TAL CUAL viene en FT-10, elegida por
@@ -16,8 +16,8 @@
 #                     que es la misma que figura en docs/esquema.md. derivado.
 #
 # Nada se estima. Un tramo que no toca ningún polígono queda NULL y va a
-# pendientes. Una unidad que no esté en la tabla VERTIENTE deja `vertiente`
-# NULL y va a pendientes: la tabla se corrige, no se adivina.
+# vacíos. Una unidad que no esté en la tabla VERTIENTE deja `vertiente`
+# NULL y va a vacíos: la tabla se corrige, no se adivina.
 
 suppressPackageStartupMessages({library(sf); library(arrow); library(dplyr); library(digest)})
 root <- normalizePath(".")
@@ -133,7 +133,7 @@ procedencia <- bind_rows(lapply(COLS_A6, function(cn) {
              stringsAsFactors = FALSE)
 }))
 
-# ---------------------------------------------------------------- pendientes
+# ---------------------------------------------------------------- vacíos
 pend <- list(); addp <- function(id, campo, motivo)
   pend[[length(pend) + 1]] <<- data.frame(id_tramo = id, campo = campo, motivo = motivo,
                                           agente = "A6", fecha = hoy, stringsAsFactors = FALSE)
@@ -144,14 +144,14 @@ for (id in a6$id_tramo[is.na(a6$unidad_geomorf)]) {
 for (id in a6$id_tramo[!is.na(a6$unidad_geomorf) & is.na(a6$vertiente)])
   addp(id, "vertiente", paste0("unidad '", a6$unidad_geomorf[a6$id_tramo == id],
                                "' sin vertiente asignada en la tabla de docs/esquema.md"))
-pendientes <- if (length(pend)) bind_rows(pend) else
+vacios <- if (length(pend)) bind_rows(pend) else
   data.frame(id_tramo = character(), campo = character(), motivo = character(),
              agente = character(), fecha = character())
 
 # ---------------------------------------------------------------- escribir
 write_parquet(a6, file.path(OUT_DIR, "a6_geomorf.parquet"))
 write_parquet(procedencia, file.path(OUT_DIR, "procedencia_a6.parquet"))
-write.csv(pendientes, file.path(OUT_DIR, "pendientes_a6.csv"), row.names = FALSE, fileEncoding = "UTF-8")
+write.csv(vacios, file.path(OUT_DIR, "vacios_a6.csv"), row.names = FALSE, fileEncoding = "UTF-8")
 
 # manifiesto parcial (Regla 3)
 dbf <- sub("[.]shp$", ".dbf", RAW_SHP)
@@ -166,4 +166,4 @@ man <- list(list(
                  "; ", n_invalidas, " polígonos inválidos reparados con st_make_valid")))
 writeLines(jsonlite::toJSON(man, auto_unbox = TRUE, pretty = TRUE),
            file.path(root, "data/raw/manifest/A6.json"), useBytes = TRUE)
-lap(t0, "escrito a6_geomorf.parquet, procedencia_a6.parquet, pendientes_a6.csv, manifest/A6.json")
+lap(t0, "escrito a6_geomorf.parquet, procedencia_a6.parquet, vacios_a6.csv, manifest/A6.json")

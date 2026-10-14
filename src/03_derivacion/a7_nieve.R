@@ -4,7 +4,7 @@
 # Insumo:  data/raw/nieve/nieve_<region>.csv   (uno por región, export de a7_nieve_ee.py)
 #          columnas: id_tramo, nieve_YYYY, valido_YYYY, nieve_YYYY_MM, valido_YYYY_MM
 #          (mediana de los píxeles del buffer de 500 m, por año y por mes)
-# Salida:  data/interim/a7_nieve.parquet, procedencia_a7.parquet, pendientes_a7.csv
+# Salida:  data/interim/a7_nieve.parquet, procedencia_a7.parquet, vacios_a7.csv
 #
 # Método (docs/esquema.md, bloque A7):
 #   año válido     valido_YYYY >= MIN_VALIDOS_ANIO días con observación (sin nube)
@@ -15,7 +15,7 @@
 #   meses_nieve   nº de meses del año en que la mediana interanual de
 #                 (nieve_m / valido_m * días del mes) supera MIN_DIAS_MES
 #   serie_inicio, serie_fin             años de la serie
-# Un tramo con menos de MIN_ANIOS años válidos queda NULL y va a pendientes.
+# Un tramo con menos de MIN_ANIOS años válidos queda NULL y va a vacíos.
 
 suppressPackageStartupMessages({library(arrow); library(dplyr); library(digest); library(jsonlite)})
 root <- normalizePath(".", winslash = "/")
@@ -108,12 +108,12 @@ for (id in falt) for (cn in COLS_A7) addp(id, cn, "el tramo no vino en ningún C
 pocos <- a7$id_tramo[!a7$id_tramo %in% falt & is.na(a7$dias_nieve_mediana)]
 for (id in pocos) for (cn in setdiff(COLS_A7, c("n_anios_validos", "dias_validos_mediana")))
   addp(id, cn, sprintf("menos de %d años con al menos %d días observados (nubes)", MIN_ANIOS, MIN_VALIDOS_ANIO))
-pendientes <- if (length(pend)) bind_rows(pend) else
+vacios <- if (length(pend)) bind_rows(pend) else
   data.frame(id_tramo = character(), campo = character(), motivo = character(), agente = character(), fecha = character())
 
 write_parquet(a7, file.path(OUT_DIR, "a7_nieve.parquet"))
 write_parquet(procedencia, file.path(OUT_DIR, "procedencia_a7.parquet"))
-write.csv(pendientes, file.path(OUT_DIR, "pendientes_a7.csv"), row.names = FALSE, fileEncoding = "UTF-8")
+write.csv(vacios, file.path(OUT_DIR, "vacios_a7.csv"), row.names = FALSE, fileEncoding = "UTF-8")
 
 # manifiesto: un registro por CSV crudo (Regla 3)
 man <- lapply(archivos, function(f) list(
@@ -123,4 +123,4 @@ man <- lapply(archivos, function(f) list(
   sha256 = digest(f, algo = "sha256", file = TRUE), agente = "A7",
   notas = sprintf("serie %d-%d; NDSI>=40; buffer 500 m; mediana de píxeles; conteos por año y mes", SERIE_INI, SERIE_FIN)))
 writeLines(toJSON(man, auto_unbox = TRUE, pretty = TRUE), file.path(root, "data/raw/manifest/A7.json"), useBytes = TRUE)
-message("escrito a7_nieve.parquet, procedencia_a7.parquet, pendientes_a7.csv, manifest/A7.json")
+message("escrito a7_nieve.parquet, procedencia_a7.parquet, vacios_a7.csv, manifest/A7.json")

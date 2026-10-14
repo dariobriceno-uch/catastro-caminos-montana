@@ -1,7 +1,7 @@
 # Ensamblaje final — orquestador (bloque ORQ).
 # Une data/interim/{a2_tramos.gpkg, a3_altimetria, a4_destinos, a5_transito, a6_geomorf}.parquet por id_tramo,
-# remapea procedencia_a1 (id_tramo_a1 -> id_tramo de A2), consolida procedencia y pendientes,
-# escribe data/processed/tramos.parquet, tramos.gpkg, procedencia.parquet, data/pendientes.csv,
+# remapea procedencia_a1 (id_tramo_a1 -> id_tramo de A2), consolida procedencia y vacíos,
+# escribe data/processed/tramos.parquet, tramos.gpkg, procedencia.parquet, data/vacios.csv,
 # logs/agregados_regionales.csv. No deriva ningún valor nuevo: solo une y remapea.
 suppressPackageStartupMessages({library(sf); library(arrow); library(dplyr)})
 root <- normalizePath(".")
@@ -44,10 +44,10 @@ for (b in c("a2", "a3", "a4", "a5", "a6", "a7")) {
 proc <- bind_rows(proc) %>% mutate(fecha_descarga = as.character(fecha_descarga))
 cat("Procedencia:", nrow(proc), "filas\n")
 
-# Pendientes
+# Vacíos
 pend <- list()
 for (b in c("a1", "a2", "a3", "a4", "a5", "a6", "a7")) {
-  p <- ip(sprintf("pendientes_%s.csv", b))
+  p <- ip(sprintf("vacios_%s.csv", b))
   if (file.exists(p)) {
     d <- read.csv(p, stringsAsFactors = FALSE, encoding = "UTF-8")
     d <- d[, c("id_tramo", "campo", "motivo", "agente", "fecha")]
@@ -67,7 +67,7 @@ if ("A7" %in% faltantes) pend[["orq_nieve"]] <- data.frame(
   motivo = "FT-08 pendiente: bloque A7 no entregado", agente = "ORQ", fecha = hoy)
 for (b in faltantes) pend[[paste0("falta_", b)]] <- data.frame(id_tramo = "*", campo = b, motivo = "bloque no entregado", agente = "ORQ", fecha = hoy)
 pend <- bind_rows(pend)
-cat("Pendientes:", nrow(pend), "filas\n")
+cat("Vacíos:", nrow(pend), "filas\n")
 
 # Agregados regionales (recalculados desde la tabla)
 agg <- st_drop_geometry(tab) %>% group_by(region) %>%
@@ -79,7 +79,7 @@ st_write(tab, file.path(root, "data/processed/tramos.gpkg"), "tramos", delete_ds
 df <- st_drop_geometry(tab); df$geometria <- unclass(st_as_binary(st_geometry(tab))); attributes(df$geometria) <- NULL  # WKB (GeoParquet); WKT era inviable con 10 M de vértices
 write_parquet(df, file.path(root, "data/processed/tramos.parquet"))
 write_parquet(proc, file.path(root, "data/processed/procedencia.parquet"))
-write.csv(pend, file.path(root, "data/pendientes.csv"), row.names = FALSE, fileEncoding = "UTF-8")
+write.csv(pend, file.path(root, "data/vacios.csv"), row.names = FALSE, fileEncoding = "UTF-8")
 write.csv(agg, file.path(root, "logs/agregados_regionales.csv"), row.names = FALSE, fileEncoding = "UTF-8")
 cat("Escrito. Columnas:", ncol(df), "\n")
 print(colSums(is.na(df)))

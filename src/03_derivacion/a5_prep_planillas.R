@@ -9,7 +9,7 @@
 # Salidas:
 #   data/interim/a5_puntos_censales_planilla.parquet
 #   data/interim/a5_puntos_censales_rest.parquet
-#   data/interim/pendientes_a5_prep.csv
+#   data/interim/vacios_a5_prep.csv
 #
 # Decisiones documentadas (ver reporte A5):
 #   - punto_censal_id  = "RR-EEE" (estación de control), primeros dos bloques
@@ -248,10 +248,10 @@ rest_long <- bind_rows(lapply(1:4, function(k) {
   arrange(capa_rest, objectid, rama_rest)
 write_parquet(rest_long, file.path(dir_out, "a5_puntos_censales_rest.parquet"))
 
-# ---- pendientes y resumen ---------------------------------------------------
+# ---- vacíos y resumen ------------------------------------------------------
 pend_df <- if (length(pend)) bind_rows(pend) else
   data.frame(archivo = character(), fila_excel = integer(), motivo = character(), agente = character(), fecha = character())
-write.csv(pend_df, file.path(dir_out, "pendientes_a5_prep.csv"), row.names = FALSE, fileEncoding = "UTF-8")
+write.csv(pend_df, file.path(dir_out, "vacios_a5_prep.csv"), row.names = FALSE, fileEncoding = "UTF-8")
 
 # resumen por planilla (lo usa el manifest A5.json para n_registros)
 resumen <- pl %>% group_by(archivo_origen, hoja, generacion, anio) %>%
@@ -266,4 +266,4 @@ cat("  NA tmda:", sum(is.na(pl$tmda)), "| NA tmda_anual:", sum(is.na(pl$tmda_anu
     "| km_planilla no NA:", sum(!is.na(pl$km_planilla)), "\n")
 cat("REST: puntos", nrow(rest), "| filas rama", nrow(rest_long), "| estaciones", n_distinct(rest_long$punto_censal_id),
     "| años", paste(sort(unique(rest_long$anio)), collapse = ","), "\n")
-cat("Pendientes prep:", nrow(pend_df), "\n")
+cat("Vacíos prep:", nrow(pend_df), "\n")

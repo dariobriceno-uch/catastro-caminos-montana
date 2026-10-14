@@ -2,7 +2,7 @@
 
 tr   <- leer_parquet(rp("data/processed/tramos.parquet"))
 proc <- leer_parquet(rp("data/processed/procedencia.parquet"))
-pend <- leer_csv(rp("data/pendientes.csv"))
+pend <- leer_csv(rp("data/vacios.csv"))
 
 COLS_ESQUEMA <- c(COLS_ORQ, COLS_A1, COLS_A2, COLS_A3, COLS_A4, COLS_A5, COLS_A6, COLS_A7)
 # Llaves de trazabilidad que el protocolo obliga a conservar (A1/A2) aunque el
@@ -50,18 +50,18 @@ test_that("FINAL: toda celda no nula tiene exactamente una fila de procedencia y
                              nrow(d$sobrantes), resumen_vector(d$campos_fuera)))
 })
 
-test_that("FINAL: pendientes.csv con columnas exactas del protocolo", {
-  expect_true(!is.null(pend) && setequal(names(pend), COLS_PENDIENTES),
+test_that("FINAL: vacios.csv con columnas exactas del protocolo", {
+  expect_true(!is.null(pend) && setequal(names(pend), COLS_VACIOS),
               info = resumen_vector(names(pend)))
 })
 
-test_that("FINAL: cada (id_tramo, campo) NULL en columnas de datos tiene fila en pendientes o bloque completo marcado *", {
+test_that("FINAL: cada (id_tramo, campo) NULL en columnas de datos tiene fila en vacíos o bloque completo marcado *", {
   falt <- character()
   for (cc in intersect(COLS_DATOS, names(tr))) {
     nul <- es_nulo(tr[[cc]])
     if (!any(nul)) next
     ids <- tr$id_tramo[nul]
-    cub <- pendiente_cubre(pend, ids, cc)
+    cub <- vacio_cubre(pend, ids, cc)
     # bloque completo marcado: fila id_tramo='*' con campo = nombre del bloque (A3, A4...) o campo='*'
     bloque <- BLOQUE_DE[[cc]]
     if (!is.null(pend) && any(pend$id_tramo == "*" & toupper(pend$campo) == bloque, na.rm = TRUE)) cub[] <- TRUE

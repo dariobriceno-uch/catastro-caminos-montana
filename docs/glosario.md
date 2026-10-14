@@ -28,5 +28,5 @@
 - **WGS84 / lon-lat.** Sistema de coordenadas en grados (el de los GPS y Google Maps).
 - **Fuente FT-xx.** Código de cada fuente de datos en `docs/fuentes.md` (FT-01 Vialidad, FT-02 censos de tránsito, FT-03 DIFROL, FT-05 INE, FT-06 SERNATUR, FT-07 DEM, FT-09 Kapos).
 - **Método.** Cómo se obtuvo cada valor: `declarado` (copiado tal cual de la fuente), `derivado` (calculado por código sobre la fuente), `estimado` (con un supuesto o geometría añadida, documentados).
-- **NULL.** Celda vacía: el valor no se pudo obtener de ninguna fuente. Cada NULL tiene su motivo en `data/pendientes.csv`. Una celda vacía es un resultado válido; una inventada invalidaría el catastro.
+- **NULL.** Celda vacía: el valor no se pudo obtener de ninguna fuente. Cada NULL tiene su motivo en `data/vacios.csv`. Una celda vacía es un resultado válido; una inventada invalidaría el catastro.
 - **Procedencia.** Tabla que registra, para cada celda con valor, de qué fuente, en qué fecha y con qué método se obtuvo.

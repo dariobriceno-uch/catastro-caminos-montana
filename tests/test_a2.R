@@ -5,7 +5,7 @@ a2df <- sin_geom(a2)
 a1   <- leer_gpkg(rp("data/interim/a1_red_vial.gpkg"))
 a1df <- sin_geom(a1)
 proc <- leer_parquet(rp("data/interim/procedencia_a2.parquet"))
-pend <- leer_csv(rp("data/interim/pendientes_a2.csv"))
+pend <- leer_csv(rp("data/interim/vacios_a2.csv"))
 
 test_that("A2: columnas requeridas presentes (id_tramo, id_tramo_a1, bloque A2)", {
   req <- c("id_tramo", "id_tramo_a1", COLS_A2)
@@ -140,12 +140,12 @@ test_that("A2: toda celda no nula del bloque A2 tiene exactamente una fila de pr
                              nrow(d$sobrantes), resumen_vector(d$campos_fuera)))
 })
 
-test_that("A2: toda celda NULL del bloque A2 tiene fila en pendientes_a2.csv", {
+test_that("A2: toda celda NULL del bloque A2 tiene fila en vacios_a2.csv", {
   falt <- character()
   for (cc in COLS_A2) {
     nul <- es_nulo(a2df[[cc]])
     if (any(nul)) {
-      cub <- pendiente_cubre(pend, a2df$id_tramo[nul], cc)
+      cub <- vacio_cubre(pend, a2df$id_tramo[nul], cc)
       if (any(!cub)) falt <- c(falt, sprintf("%s (%d)", cc, sum(!cub)))
     }
   }

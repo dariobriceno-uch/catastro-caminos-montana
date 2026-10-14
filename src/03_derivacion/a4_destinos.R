@@ -10,10 +10,10 @@
 # Salidas:
 #   <dir_salida>/a4_destinos.parquet    id_tramo + columnas del bloque A4
 #   <dir_salida>/procedencia_a4.parquet formato largo
-#   <dir_salida>/pendientes_a4.csv
+#   <dir_salida>/vacios_a4.csv
 #
 # Reglas: ningún valor se escribe si no proviene de un archivo en data/raw/.
-# Cualquier celda no derivable va NULL y a pendientes.
+# Cualquier celda no derivable va NULL y a vacíos.
 #
 # DECISIONES DEL ORQUESTADOR (2026-08-26)
 # - buffer_join_m = 500 m para pasos, centros de esquí y localidades; su fuente
@@ -199,7 +199,7 @@ message("centros OSM que duplican uno de SERNATUR (a <= ", DEDUP_ESQUI_M, " m): 
         " -> se descartan; se agregan ", sum(!dup), ": ", paste(esqui12$nombre[!dup], collapse = " | "))
 esqui <- rbind(esqui06, esqui12[!dup, ])
 esqui$.idx <- seq_len(nrow(esqui))
-esqui_matched <- rep(FALSE, nrow(esqui))   # se llena en el cruce; sirve para pendientes
+esqui_matched <- rep(FALSE, nrow(esqui))   # se llena en el cruce; sirve para vacíos
 
 limite_terr <- limite[limite$pais_c %in% LIMITE_PAISES, ]
 limite_u    <- st_union(st_geometry(limite_terr))
@@ -326,7 +326,7 @@ mas_cercano <- function(t_z, obj_z, buffer, etiqueta) {
 # ---------------------------------------------------------------- derivación por zona UTM
 res <- list(); n_multi_comuna <- 0L; n_multi_prov <- 0L
 for (z in sort(unique(tramos$utm_zona))) {
-  if (!z %in% c(18L, 19L)) { warning("utm_zona no válida: ", z, " (se omite, va a pendientes)"); next }
+  if (!z %in% c(18L, 19L)) { warning("utm_zona no válida: ", z, " (se omite, va a vacíos)"); next }
   crs <- 32700L + z; tz0 <- Sys.time()
   t_z <- st_transform(tramos[tramos$utm_zona == z, ], crs)
   message("zona ", z, ": ", nrow(t_z), " tramos")
@@ -465,7 +465,7 @@ procedencia <- bind_rows(lapply(COLS_A4, function(cn) {
          metodo = m$metodo, agente = AGENTE)
 }))
 
-# ---------------------------------------------------------------- pendientes
+# ---------------------------------------------------------------- vacíos
 pend <- list()
 addp <- function(id, campo, motivo) pend[[length(pend) + 1]] <<- tibble(id_tramo = id, campo = campo, motivo = motivo, agente = AGENTE, fecha = FECHA_HOY)
 addp("*", "esqui_cota_base", "FT-06 (SERNATUR atractivos turísticos) no trae campo de cota base; columna NULL en todas las filas")
@@ -483,13 +483,13 @@ for (id in destinos$id_tramo[is.na(destinos$provincia)]) addp(id, "provincia", "
 for (id in destinos$id_tramo[is.na(destinos$dist_limite_m)]) addp(id, "dist_limite_m", "no se pudo calcular distancia al límite internacional")
 for (id in destinos$id_tramo[is.na(destinos$dist_servicios_km)]) addp(id, "dist_servicios_km", "no se pudo calcular distancia a localidad con servicios")
 for (id in faltantes) addp(id, "*", "utm_zona fuera de {18,19}; bloque A4 no derivado")
-pendientes <- bind_rows(pend)
+vacios <- bind_rows(pend)
 
 # ---------------------------------------------------------------- escritura
 dir.create(OUT_DIR, showWarnings = FALSE, recursive = TRUE)
 write_parquet(destinos,    file.path(OUT_DIR, "a4_destinos.parquet"))
 write_parquet(procedencia, file.path(OUT_DIR, "procedencia_a4.parquet"))
-write.csv(pendientes, file.path(OUT_DIR, "pendientes_a4.csv"), row.names = FALSE, fileEncoding = "UTF-8")
+write.csv(vacios, file.path(OUT_DIR, "vacios_a4.csv"), row.names = FALSE, fileEncoding = "UTF-8")
 
 # resumen
 nulls <- sapply(COLS_A4, function(cn) sum(is.na(destinos[[cn]])))
@@ -503,5 +503,5 @@ PASO_VEHICULAR <- c("Personas, vehículos y carga", "Solo cruce de peatones y ve
 veh <- destinos$es_paso %in% TRUE & destinos$paso_trafico %in% PASO_VEHICULAR
 message("tramos con paso vehicular (", paste(PASO_VEHICULAR, collapse = " / "), "): ", sum(veh),
         " | con paso no vehicular: ", sum(destinos$es_paso %in% TRUE) - sum(veh))
-message("procedencia: ", nrow(procedencia), " filas | pendientes: ", nrow(pendientes), " filas")
+message("procedencia: ", nrow(procedencia), " filas | vacíos: ", nrow(vacios), " filas")
 lap(T0, "tiempo total")

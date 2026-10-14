@@ -7,7 +7,7 @@
 <meta name="generator" content="src/04_ensamblaje/visor_html.py">
 <meta name="fondef-payload-sha256" content="6cc5fee542f1a68223d438a65f90e0d48df0c47bd4312832558806b5bc2811de">
 <meta name="fondef-parquet-sha256" content="0cd8db65b138b8d178088c1f6fef0a5e3022e74175e338ea0154cbdd216f3c49">
-<meta name="fondef-generado" content="2026-10-14T13:40:37">
+<meta name="fondef-generado" content="2026-10-14T13:51:21">
 <style>
 /* === estilo_base.css === */
 /* VISOR DE TRAMOS — tokens, reset y armazon. Los modulos aportan su propio CSS. */
@@ -3609,7 +3609,7 @@ button{font:inherit;color:inherit}
     pie.appendChild(ui.notaMeta);
     pie.appendChild(el("p", "fi-nota fi-aviso",
       "Una celda vacía significa NULL en la base: el valor no se pudo derivar de " +
-      "data/raw/ y la fila quedó registrada en data/pendientes.csv. No es un cero, " +
+      "data/raw/ y la fila quedó registrada en data/vacios.csv. No es un cero, " +
       "ni un «sin información», ni un dato pendiente de digitar en el visor."));
     ui.pieProc = el("p", "fi-nota");
     pie.appendChild(ui.pieProc);
@@ -3967,7 +3967,7 @@ button{font:inherit;color:inherit}
         "procedencia — procedencia.parquet registra una fila sólo por cada " +
         "valor presente —, así que este campo no lleva método, ni fuente, ni " +
         "fecha de descarga, ni agente. El motivo por el que no se pudo derivar " +
-        "queda en data/pendientes.csv."));
+        "queda en data/vacios.csv."));
     } else if (p) {
       const pares = [["fuente", p.fuente], ["fecha de descarga", p.fecha],
                      ["método", p.metodo], ["agente", p.agente]];

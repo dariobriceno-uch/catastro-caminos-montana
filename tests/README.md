@@ -42,9 +42,9 @@ Requiere R 4.5 con `testthat`, `sf`, `arrow`, `jsonlite`, `digest`. Si falta
 | a3 | `data/interim/a3_altimetria.parquet`, `data/interim/procedencia_a3.parquet`, `data/interim/a2_tramos.gpkg` |
 | a4 | `data/interim/a4_destinos.parquet`, `data/interim/procedencia_a4.parquet`, `data/interim/a2_tramos.gpkg` (+ `a3_altimetria.parquet` para la aserción de esquí) |
 | a5 | `data/interim/a5_transito.parquet`, `data/interim/procedencia_a5.parquet`, `data/interim/a2_tramos.gpkg` |
-| final | `data/processed/tramos.parquet`, `data/processed/procedencia.parquet`, `data/pendientes.csv` (+ `logs/agregados_regionales.csv` opcional) |
+| final | `data/processed/tramos.parquet`, `data/processed/procedencia.parquet`, `data/vacios.csv` (+ `logs/agregados_regionales.csv` opcional) |
 
-Los archivos opcionales (`pendientes_aX.csv`, `a1_excluidos.csv`,
+Los archivos opcionales (`vacios_aX.csv`, `a1_excluidos.csv`,
 `agregados_regionales.csv`) hacen que la aserción correspondiente se salte o
 asuma cero, y eso queda anotado como hallazgo.
 
@@ -60,7 +60,7 @@ asuma cero, y eso queda anotado como hallazgo.
 - Capa `tramos` en los gpkg (si no existe, se toma la primera capa).
 - La columna de geometría del gpkg cuenta como `geometria` del esquema, sea
   cual sea su nombre físico (`geom`, `geometry`, `geometria`).
-- `pendientes_aX.csv` cubre una celda si tiene fila `(id_tramo, campo)`,
+- `vacios_aX.csv` cubre una celda si tiene fila `(id_tramo, campo)`,
   `(id_tramo, *)`, `(*, campo)` o `(*, *)`. En `final` también se acepta
   `(*, <bloque>)` con bloque en `A1..A5`.
 - Filas excluidas por A1 (p. ej. Isla de Pascua) se leen de

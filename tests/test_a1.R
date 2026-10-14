@@ -4,7 +4,7 @@
 a1   <- leer_gpkg(rp("data/interim/a1_red_vial.gpkg"))
 a1df <- sin_geom(a1)
 proc <- leer_parquet(rp("data/interim/procedencia_a1.parquet"))
-pend <- leer_csv(rp("data/interim/pendientes_a1.csv"))
+pend <- leer_csv(rp("data/interim/vacios_a1.csv"))
 man  <- leer_manifest(rp("data/raw/manifest/A1.json"))
 crudo <- leer_red_vial_cruda()
 
@@ -198,23 +198,23 @@ test_that("A1: campos declarados llevan metodo=declarado y geometria metodo=deri
               info = sprintf("declarados mal: %d, geometria mal: %d", sum(decl), sum(geo)))
 })
 
-# -- Pendientes -------------------------------------------------------------------
-test_that("A1: toda celda NULL de un campo A1 tiene fila en pendientes_a1.csv", {
+# -- Vacíos -------------------------------------------------------------------
+test_that("A1: toda celda NULL de un campo A1 tiene fila en vacios_a1.csv", {
   ids <- a1df$id_tramo_a1
   falt <- character()
   for (cc in setdiff(COLS_A1, "geometria")) {
     nul <- es_nulo(a1df[[cc]])
     if (any(nul)) {
-      cub <- pendiente_cubre(pend, ids[nul], cc)
+      cub <- vacio_cubre(pend, ids[nul], cc)
       if (any(!cub)) falt <- c(falt, sprintf("%s (%d)", cc, sum(!cub)))
     }
   }
   expect_true(length(falt) == 0, info = paste(falt, collapse = "; "))
 })
 
-test_that("A1: pendientes_a1.csv, si existe, tiene columnas exactas del protocolo", {
-  skip_if(is.null(pend), "sin pendientes_a1.csv")
-  expect_setequal(names(pend), COLS_PENDIENTES)
+test_that("A1: vacios_a1.csv, si existe, tiene columnas exactas del protocolo", {
+  skip_if(is.null(pend), "sin vacios_a1.csv")
+  expect_setequal(names(pend), COLS_VACIOS)
 })
 
 test_that("A1: suma de n_registros de las páginas = count_total.json (conteo independiente del servicio)", {

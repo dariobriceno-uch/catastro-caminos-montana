@@ -51,7 +51,7 @@ DOM_UTM          <- c(18L, 19L)
 DOM_RUMBOS       <- c("N", "NE", "E", "SE", "S", "SO", "O", "NO")
 DOM_MATCH        <- c("espacial", "rol_kilometraje")
 COLS_PROCEDENCIA <- c("id_tramo", "campo", "fuente", "fecha_descarga", "metodo", "agente")
-COLS_PENDIENTES  <- c("id_tramo", "campo", "motivo", "agente", "fecha")
+COLS_VACIOS  <- c("id_tramo", "campo", "motivo", "agente", "fecha")
 N_PASOS_HABILITADOS_REF <- 64L   # docs/fuentes.md FT-03a, control de completitud
 
 # ---------------------------------------------------------------------------
@@ -82,7 +82,7 @@ INSUMOS <- list(
          rp("data/processed/tramos.parquet")),
   final = c(rp("data/processed/tramos.parquet"),
             rp("data/processed/procedencia.parquet"),
-            rp("data/pendientes.csv")),
+            rp("data/vacios.csv")),
   visor = c(rp("data/processed/tramos.parquet"),
             rp("data/processed/procedencia.parquet"),
             rp("data/interim/visor_payload.json"),
@@ -212,7 +212,7 @@ diagnostico_procedencia <- function(tabla, proc, id_col, columnas) {
   )
 }
 
-pendiente_cubre <- function(pend, id, campo) {
+vacio_cubre <- function(pend, id, campo) {
   if (is.null(pend) || nrow(pend) == 0) return(rep(FALSE, length(id)))
   glob_todo <- any(pend$id_tramo == "*" & pend$campo == "*", na.rm = TRUE)
   glob_campo <- unique(pend$campo[pend$id_tramo == "*" & !is.na(pend$id_tramo)])

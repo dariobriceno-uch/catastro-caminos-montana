@@ -1,0 +1,25 @@
+== Validación etapa a2 — 2026-10-14 13:54:07 ==
+Raíz: catastro_caminos
+[PASS] A2: columnas requeridas presentes (id_tramo, id_tramo_a1, bloque A2)
+[PASS] A2: no escribe columnas de otros bloques (A3/A4/A5/ORQ)
+[PASS] A2: id_tramo es único y no nulo
+[PASS] A2: todo id_tramo_a1 de A1 aparece al menos una vez
+[PASS] A2: todo id_tramo_a1 de A2 existe en A1
+[PASS] A2: utm_zona ∈ {18, 19}
+[PASS] A2: longitud_calc_m > 0 en toda fila
+[PASS] A2: motivo_corte en dominio
+[PASS] A2: subdividido no nulo (booleano)
+[PASS] A2: subdividido = FALSE ⇒ id_tramo == id_tramo_a1
+[PASS] A2: subdividido = FALSE ⇒ motivo_corte == 'original'
+[PASS] A2: subdividido = TRUE ⇒ id_tramo tiene formato <id_tramo_a1>-<k> y motivo != original
+[PASS] A2: suma de longitud_calc_m de hijos ≈ longitud del padre (±1 %)
+[PASS] A2: longitud_calc_m coincide con la geometría propia proyectada a su utm_zona (±1 %)
+[PASS] A2: delta_longitud_pct coherente con km_tramo de A1 cuando ambos existen
+[PASS] A2: unidad de km_tramo es metros (razón mediana longitud_calc_m/km_tramo en [0.9, 1.1])
+[PASS] A2: coord_inicio y coord_fin no nulos
+[PASS] A2: procedencia — columnas, dominio de metodo, fuente no vacía
+[PASS] A2: toda celda no nula del bloque A2 tiene exactamente una fila de procedencia
+[PASS] A2: toda celda NULL del bloque A2 tiene fila en vacios_a2.csv
+
+Resumen a2: 20 PASS, 0 FAIL, 0 SKIP (de 20 aserciones)
+ESTADO ETAPA A2: PASS

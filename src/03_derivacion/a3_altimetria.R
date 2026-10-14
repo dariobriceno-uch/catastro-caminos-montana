@@ -16,7 +16,7 @@
 #           geometría (Multi)LineString Z en EPSG:4326 (bloque A2).
 # Salidas : <dir_salida>/a3_altimetria.parquet   (bloque A3 de docs/esquema.md)
 #           <dir_salida>/procedencia_a3.parquet  (formato largo del protocolo)
-#           <dir_salida>/pendientes_a3.csv
+#           <dir_salida>/vacios_a3.csv
 #           Se escriben SOLO al final, completas.
 #
 # Fuente  : FT-07 Copernicus DEM GLO-30 (COG, bucket público
@@ -42,7 +42,7 @@
 #    cruzan teselas se leen sin costura y el COG se abre una vez por tesela.
 # 3. Cota por muestra: extracción BILINEAL. Si alguna muestra del tramo queda
 #    NoData (NA), TODAS las columnas A3 del tramo van NULL y el tramo pasa a
-#    pendientes (criterio estricto: no se interpola ni se rellena).
+#    vacíos (criterio estricto: no se interpola ni se rellena).
 # 4. Perfil longitudinal z(d). Sin suavizar: cota_min, cota_max, cota_media
 #    (media de muestras; equivale a media ponderada por longitud por el paso
 #    constante). Perfil SUAVIZADO con media móvil centrada de
@@ -60,9 +60,9 @@
 # 5. orientacion_ladera: aspecto del DEM (terrain, 8 vecinos) en la celda de
 #    cada muestra, clasificado en 8 rumbos (N, NE, E, SE, S, SO, O, NO,
 #    sectores de 45°), descartando celdas con pendiente de terreno 0. Moda.
-#    Todas planas → NULL + pendiente.
+#    Todas planas → NULL + vacío.
 # 6. sinuosidad = longitud proyectada / distancia euclídea entre extremos.
-#    Extremos coincidentes (< 1 m) → NULL + pendiente.
+#    Extremos coincidentes (< 1 m) → NULL + vacío.
 # 7. clase_kapos (FT-09 sobre FT-07), evaluada en la muestra de cota_max:
 #      E = cota_max; S = pendiente del TERRENO (grados) en esa celda;
 #      R = max − min del DEM en radio 7 km alrededor de esa muestra, leído
@@ -71,10 +71,10 @@
 #      1: E>4500 | 2: 3500<E≤4500 | 3: 2500<E≤3500 | 4: 1500<E≤2500 & S≥2 |
 #      5: 1000<E≤1500 & (S≥5 | R>300) | 6: 300≤E≤1000 & R>300 | 0: ninguna.
 #      Clase 7 NO es derivable por umbrales: se escribe 0 y queda UNA fila en
-#      pendientes (id_tramo = *) advirtiendo que un 0 puede encubrir clase 7.
+#      vacíos (id_tramo = *) advirtiendo que un 0 puede encubrir clase 7.
 # 8. cota_max_z_mop = máximo del Z de la geometría de entrada (FT-01,
 #    contraste); delta_z_m = cota_max − cota_max_z_mop. Filas cuyo Z es
-#    íntegramente 0 o ausente → ambas NULL + pendiente `z_mop_cero`.
+#    íntegramente 0 o ausente → ambas NULL + vacío `z_mop_cero`.
 #
 # Procedencia: una fila por celda no nula; metodo `derivado`; agente A3.
 # fuente: FT-07 para todo; `FT-07;FT-09` en clase_kapos (regla Kapos sobre el
@@ -413,7 +413,7 @@ stopifnot(nrow(proc) == sum(!is.na(as.matrix(A3[, cols_a3]))))
 
 write_parquet(A3, file.path(dir_out, "a3_altimetria.parquet"))
 write_parquet(proc, file.path(dir_out, "procedencia_a3.parquet"))
-write.csv(pend_df, file.path(dir_out, "pendientes_a3.csv"), row.names = FALSE, na = "", fileEncoding = "UTF-8")
+write.csv(pend_df, file.path(dir_out, "vacios_a3.csv"), row.names = FALSE, na = "", fileEncoding = "UTF-8")
 
 # ---- resumen -----------------------------------------------------------------
 log_msg("escrito %s (%d filas)", file.path(dir_out, "a3_altimetria.parquet"), nrow(A3))
@@ -425,5 +425,5 @@ log_msg("cruza_portezuelo TRUE: %d", sum(A3$cruza_portezuelo, na.rm = TRUE))
 dz <- A3$delta_z_m[!is.na(A3$delta_z_m)]
 if (length(dz)) log_msg("delta_z_m: n=%d mediana=%.1f p95=%.1f |delta|>50: %d",
                         length(dz), median(dz), quantile(dz, .95), sum(abs(dz) > 50))
-log_msg("procedencia: %d filas; pendientes: %d filas", nrow(proc), nrow(pend_df))
+log_msg("procedencia: %d filas; vacíos: %d filas", nrow(proc), nrow(pend_df))
 log_msg("==== A3 fin | tiempo total %s", format(round(Sys.time() - T_INI, 1)))

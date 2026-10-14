@@ -274,7 +274,7 @@ del cruce.
 **Por qué existe.** FT-06 (2020) no trae La Parva como punto propio y ubica
 Corralco, Villarrica, Chapa Verde y Cerro Mirador lejos del camino de acceso.
 OSM trae 15 centros con coordenadas. Ninguna de las dos fuentes abiertas
-incluye Bosque Nevado Huilo Huilo, que queda en `pendientes`.
+incluye Bosque Nevado Huilo Huilo, que queda en `vacios`.
 
 **Fuente descartada: Snow-Forecast (Meteo365 Ltd).** Trae los 17 centros con
 cota base y cumbre, pero sus términos de uso prohíben reutilizar y redistribuir

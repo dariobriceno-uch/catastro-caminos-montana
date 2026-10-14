@@ -174,7 +174,7 @@ de la fuente, no un atributo de FT-10. Se discute aquí; el código la copia.
 | `otra` | Depresiones, fosas, pampas, llanos, cuencas, salares, desierto, lagos de barrera morrénica |
 
 Una unidad que no esté en la tabla deja `vertiente` en `NULL` y va a
-`pendientes`. La tabla se corrige; el valor no se adivina.
+`vacios`. La tabla se corrige; el valor no se adivina.
 
 **Discutible.** `Gran fosa prealtiplanica` está en `otra` por ser depresión,
 aunque queda entre precordillera y altiplano. `Cordillera patagonica insular`
@@ -253,7 +253,7 @@ Se documenta para que nadie lo agregue por su cuenta a mitad de camino.
 - Cobertura nival y días con nieve al año. Requiere Earth Engine, cuyo registro
   todavía no está resuelto. Reservado como FT-08.
 
-**No derivable de ninguna fuente disponible.** Va a `data/pendientes.csv`.
+**No derivable de ninguna fuente disponible.** Va a `data/vacios.csv`.
 
 - Función minera, energética, turística no-esquí y longitudinal
 - Administrador efectivo cuando no es Vialidad

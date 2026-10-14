@@ -3,7 +3,7 @@
 a7   <- leer_parquet(rp("data/interim/a7_nieve.parquet"))
 base <- leer_parquet(rp("data/processed/tramos.parquet"))
 proc <- leer_parquet(rp("data/interim/procedencia_a7.parquet"))
-pend <- leer_csv(rp("data/interim/pendientes_a7.csv"))
+pend <- leer_csv(rp("data/interim/vacios_a7.csv"))
 crudos <- list.files(rp("data/raw/nieve"), pattern = "^nieve_.*[.]csv$", full.names = TRUE)
 
 SERIE_INI <- 2010L; SERIE_FIN <- 2024L; MIN_VALIDOS <- 60L; MIN_ANIOS <- 10L
@@ -62,7 +62,7 @@ test_that("A7: procedencia FT-08 / derivado / A7, una fila por celda con valor",
     expect_true(setequal(proc$id_tramo[proc$campo == cn], a7$id_tramo[!es_nulo(a7[[cn]])]), info = cn)
 })
 
-test_that("A7: todo NULL de dias_nieve_mediana está en pendientes con motivo", {
+test_that("A7: todo NULL de dias_nieve_mediana está en vacíos con motivo", {
   nulos <- a7$id_tramo[es_nulo(a7$dias_nieve_mediana)]
   expect_true(all(nulos %in% pend$id_tramo[pend$campo == "dias_nieve_mediana"]),
               info = resumen_vector(setdiff(nulos, pend$id_tramo)))

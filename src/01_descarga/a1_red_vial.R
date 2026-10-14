@@ -1,7 +1,7 @@
 # =============================================================================
 # A1 — Red Vial (FT-01). Descarga capa 3 de Red_Vial_Chile/MapServer, registra
 # manifest, construye data/interim/a1_red_vial.gpkg (capa `tramos`),
-# procedencia_a1.parquet y pendientes_a1.csv.
+# procedencia_a1.parquet y vacios_a1.csv.
 #
 # Re-ejecutable desde la raíz:  Rscript src/01_descarga/a1_red_vial.R
 # Los archivos ya presentes en data/raw/red_vial/ NO se vuelven a descargar ni
@@ -313,7 +313,7 @@ if (file.exists(GPKG)) unlink(GPKG)
 st_write(tramos, GPKG, layer = "tramos", quiet = TRUE, dim = "XYZ")
 log_line("Escrito ", GPKG, " capa tramos: ", nrow(tramos), " filas")
 
-# ---- 7. procedencia y pendientes ---------------------------------------------------
+# ---- 7. procedencia y vacíos ------------------------------------------------------
 campos_a1 <- unname(esperados)
 attr_df <- st_drop_geometry(tramos)
 proc <- bind_rows(
@@ -336,8 +336,8 @@ pend <- bind_rows(
            paste0("Región no descargada por fallo persistente del servicio: ", paste(regiones_fallidas, collapse = "; ")) else character(0))
 ) |> mutate(agente = AGENTE, fecha = FECHA_DESCARGA) |>
   select(id_tramo, campo, motivo, agente, fecha)
-write.csv(pend, file.path(INT_DIR, "pendientes_a1.csv"), row.names = FALSE, fileEncoding = "UTF-8")
-log_line("Pendientes: ", nrow(pend), " filas")
+write.csv(pend, file.path(INT_DIR, "vacios_a1.csv"), row.names = FALSE, fileEncoding = "UTF-8")
+log_line("Vacíos: ", nrow(pend), " filas")
 
 # Excluidos: una fila por registro crudo que no entra a la tabla
 excl <- tibble(objectid_mop = as.integer(raw_sf$OBJECTID[excl_idx]),

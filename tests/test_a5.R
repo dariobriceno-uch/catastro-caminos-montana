@@ -3,7 +3,7 @@
 a5   <- leer_parquet(rp("data/interim/a5_transito.parquet"))
 a2df <- sin_geom(leer_gpkg(rp("data/interim/a2_tramos.gpkg")))
 proc <- leer_parquet(rp("data/interim/procedencia_a5.parquet"))
-pend <- leer_csv(rp("data/interim/pendientes_a5.csv"))
+pend <- leer_csv(rp("data/interim/vacios_a5.csv"))
 VIGENCIA_FT02 <- 2025L   # docs/fuentes.md: planillas 2024/2025, REST 2014-2025 (verificado por A5)
 
 test_that("A5: columnas requeridas presentes (id_tramo + bloque A5)", {
@@ -95,12 +95,12 @@ test_that("A5: toda celda no nula del bloque A5 tiene exactamente una fila de pr
                              nrow(d$sobrantes), resumen_vector(d$campos_fuera)))
 })
 
-test_that("A5: toda celda NULL del bloque A5 tiene fila en pendientes_a5.csv", {
+test_that("A5: toda celda NULL del bloque A5 tiene fila en vacios_a5.csv", {
   falt <- character()
   for (cc in COLS_A5) {
     nul <- es_nulo(a5[[cc]])
     if (any(nul)) {
-      cub <- pendiente_cubre(pend, a5$id_tramo[nul], cc)
+      cub <- vacio_cubre(pend, a5$id_tramo[nul], cc)
       if (any(!cub)) falt <- c(falt, sprintf("%s (%d)", cc, sum(!cub)))
     }
   }

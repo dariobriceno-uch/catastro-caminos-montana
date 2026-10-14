@@ -3,7 +3,7 @@
 # Lee data/interim/a1_red_vial.gpkg (capa `tramos`) y escribe:
 #   data/interim/a2_tramos.gpkg (capa `tramos`)
 #   data/interim/procedencia_a2.parquet
-#   data/interim/pendientes_a2.csv
+#   data/interim/vacios_a2.csv
 #   logs/a2_segmentacion.log
 #
 # Re-ejecutable desde la raíz:  Rscript src/02_segmentacion/a2_segmentacion.R
@@ -19,7 +19,7 @@
 #        delta_longitud_pct = 100 * (longitud_calc_m - km_tramo) / km_tramo
 #    con km_tramo tal cual (metros). No se multiplica por 1.000.
 #    Si km_tramo == 0 (1.622 tramos en A1) el delta es indefinido → NULL +
-#    pendiente con motivo `km_tramo_cero_en_A1`.
+#    vacío con motivo `km_tramo_cero_en_A1`.
 #
 # 2. ZONA UTM. utm_zona = 18 si la longitud del centroide del tramo (EPSG:4326,
 #    centroide planar) es < -72°, y 19 si es >= -72°. El meridiano central de la
@@ -65,7 +65,7 @@
 #
 # 7. TRAMOS SIN COMUNA. Tramos que no intersectan ningún polígono comunal
 #    (mar, borde) no se cortan, motivo_corte = original, y se registran en
-#    pendientes con motivo `fuera_de_comunas` (campo motivo_corte).
+#    vacíos con motivo `fuera_de_comunas` (campo motivo_corte).
 #
 # 8. PADRES MULTIPARTE. 5 padres son MULTILINESTRING reales. El referenciamiento
 #    lineal recorre las partes en orden y no interpola entre partes distintas;
@@ -91,7 +91,7 @@ MAN_A1  <- file.path(ROOT, "data/raw/manifest/A1.json")
 MAN_A4  <- file.path(ROOT, "data/raw/manifest/A4.json")
 OUT_GPKG <- file.path(ROOT, "data/interim/a2_tramos.gpkg")
 OUT_PROC <- file.path(ROOT, "data/interim/procedencia_a2.parquet")
-OUT_PEND <- file.path(ROOT, "data/interim/pendientes_a2.csv")
+OUT_PEND <- file.path(ROOT, "data/interim/vacios_a2.csv")
 LOG_DIR  <- file.path(ROOT, "logs"); dir.create(LOG_DIR, showWarnings = FALSE, recursive = TRUE)
 LOG      <- file.path(LOG_DIR, "a2_segmentacion.log")
 
@@ -373,7 +373,7 @@ proc <- proc[, c("id_tramo", "campo", "fuente", "fecha_descarga", "metodo", "age
 write_parquet(proc, OUT_PROC)
 log_line("procedencia: ", nrow(proc), " filas")
 
-# ---- pendientes -------------------------------------------------------------
+# ---- vacíos ----------------------------------------------------------------
 HOY <- format(Sys.time(), "%Y-%m-%d", tz = "UTC")
 pend <- list()
 h <- out$subdividido
@@ -390,7 +390,7 @@ if (nrow(pend) == 0) pend <- data.frame(id_tramo = character(), campo = characte
 pend$agente <- AGENTE; pend$fecha <- HOY
 pend <- pend[, c("id_tramo", "campo", "motivo", "agente", "fecha")]
 con <- file(OUT_PEND, open = "wb"); write.csv(pend, con, row.names = FALSE, fileEncoding = "UTF-8"); close(con)
-log_line("pendientes: ", nrow(pend), " filas (hijos sin km = ", sum(h), ", km_tramo=0 = ", sum(z0),
+log_line("vacíos: ", nrow(pend), " filas (hijos sin km = ", sum(h), ", km_tramo=0 = ", sum(z0),
          ", fuera_de_comunas = ", length(fc), ")")
 
 # ---- resumen ----------------------------------------------------------------

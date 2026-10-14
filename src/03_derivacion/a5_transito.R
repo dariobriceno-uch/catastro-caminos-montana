@@ -13,7 +13,7 @@
 #   data/interim/a5_transito.parquet    id_tramo + tmda, tmda_invierno, tmda_composicion,
 #                                       punto_censal_id, dist_punto_censal_m, tmda_anio, match_metodo
 #   data/interim/procedencia_a5.parquet id_tramo, campo, fuente, fecha_descarga, metodo, agente
-#   data/interim/pendientes_a5.csv      id_tramo, campo, motivo, agente, fecha
+#   data/interim/vacios_a5.csv      id_tramo, campo, motivo, agente, fecha
 #
 # Reglas de asociación (ver reporte A5 de la fase de preparación):
 #   1. Punto censal asociado = estación de control (REST, con coordenadas) más
@@ -23,11 +23,11 @@
 #      rol del tramo. Se toma el año más reciente disponible para la estación,
 #      primero en planilla (trae muestra de junio y composición) y, si la
 #      estación no está en planilla, en el REST (solo TMDA anual).
-#      - 0 ramas con el rol del tramo  -> NULL + pendiente (la estación mide otro camino)
+#      - 0 ramas con el rol del tramo  -> NULL + vacío (la estación mide otro camino)
 #      - >1 ramas con el mismo rol     -> tmda, tmda_invierno, tmda_composicion NULL
 #        (ambigua: p.ej. Ruta 5 en ambos sentidos; decisión del orquestador,
 #        opción (a)). punto_censal_id (estación), dist_punto_censal_m,
-#        match_metodo y tmda_anio sí se escriben. pendientes_a5.csv lista los
+#        match_metodo y tmda_anio sí se escriben. vacios_a5.csv lista los
 #        candidatos como "rama_ambigua: <rama_id>=<tmda>; <rama_id>=<tmda>".
 #   3. match_metodo = "rol_kilometraje" solo cuando el tramo no tiene geometría
 #      utilizable: se busca por rol en planilla y se acepta únicamente si el rol
@@ -165,7 +165,7 @@ for (i in seq_len(nrow(tr))) {
   cand <- cand %>% filter(anio == max(anio))
   if (is.na(rn)) {
     # Hallazgo A1: rol "S/R", "-" o vacío -> no hay rol identificable. Se escribe
-    # la estación, la distancia, el método y el año; tmda* NULL con pendiente.
+    # la estación, la distancia, el método y el año; tmda* NULL con vacío registrado.
     out$tmda_anio[i] <- as.integer(max(cand$anio))
     for (cp in c("tmda", "tmda_invierno", "tmda_composicion"))
       add_pend(id, cp, paste0("rol_no_identificable: rol del tramo '", tr$rol[i], "'; estación ", e, " mide [", paste(unique(cand$rol_planilla), collapse = "; "), "]"))
@@ -181,7 +181,7 @@ for (i in seq_len(nrow(tr))) {
     # Decisión del orquestador (2026-08-26), opción (a): ramas ambiguas -> tmda,
     # tmda_invierno y tmda_composicion NULL; punto_censal_id (estación),
     # dist_punto_censal_m, match_metodo y tmda_anio sí se escriben porque
-    # describen la estación asociada, no la rama. Candidatos a pendientes.
+    # describen la estación asociada, no la rama. Candidatos a vacíos.
     out$tmda_anio[i] <- as.integer(max(sel$anio))
     motivo <- paste0("rama_ambigua: ", paste0(sel$punto_rama_id, "=", round(sel$tmda_anual), collapse = "; "))
     for (cp in c("tmda", "tmda_invierno", "tmda_composicion")) add_pend(id, cp, motivo)
@@ -220,23 +220,23 @@ stopifnot(all(is.na(out$dist_punto_censal_m) | out$dist_punto_censal_m >= 0))
 n_no_nulos <- sum(!is.na(out[, setdiff(names(out), "id_tramo")]))
 stopifnot(nrow(proc) == n_no_nulos)               # completitud de procedencia
 stopifnot(all(proc$metodo %in% c("derivado", "declarado", "estimado")))
-# toda celda NULL de un tramo con geometría tiene fila en pendientes
+# toda celda NULL de un tramo con geometría tiene fila en vacíos
 for (cp in setdiff(names(out), "id_tramo")) {
   nulos <- out$id_tramo[is.na(out[[cp]])]
   faltan <- setdiff(nulos, pend_df$id_tramo[pend_df$campo == cp])
-  if (length(faltan)) stop("celdas NULL sin pendiente en ", cp, ": ", paste(head(faltan), collapse = ","))
+  if (length(faltan)) stop("celdas NULL sin vacío registrado en ", cp, ": ", paste(head(faltan), collapse = ","))
 }
 
 write_parquet(out, file.path(dir_out, "a5_transito.parquet"))
 write_parquet(proc, file.path(dir_out, "procedencia_a5.parquet"))
-write.csv(pend_df, file.path(dir_out, "pendientes_a5.csv"), row.names = FALSE, fileEncoding = "UTF-8")
+write.csv(pend_df, file.path(dir_out, "vacios_a5.csv"), row.names = FALSE, fileEncoding = "UTF-8")
 
 cat("A5: tramos", nrow(out), "| espacial", sum(out$match_metodo == "espacial", na.rm = TRUE),
     "| rol_kilometraje", sum(out$match_metodo == "rol_kilometraje", na.rm = TRUE), "\n")
 for (cp in setdiff(names(out), "id_tramo")) cat("  NULL", cp, ":", sum(is.na(out[[cp]])), "\n")
 cat("  dist_punto_censal_m mediana:", round(median(out$dist_punto_censal_m, na.rm = TRUE)),
     "| >5000 m:", sum(out$dist_punto_censal_m > 5000, na.rm = TRUE), "\n")
-cat("  procedencia filas:", nrow(proc), "| pendientes filas:", nrow(pend_df), "\n")
+cat("  procedencia filas:", nrow(proc), "| vacíos filas:", nrow(pend_df), "\n")
 cat("  rama_ambigua:", n_distinct(pend_df$id_tramo[grepl("^rama_ambigua", pend_df$motivo)]),
     "| rol_no_identificable:", n_distinct(pend_df$id_tramo[grepl("^rol_no_identificable", pend_df$motivo)]), "\n")
 cat("  tmda_anio:", paste(names(table(out$tmda_anio)), table(out$tmda_anio), collapse = " "), "\n")

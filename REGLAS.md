@@ -23,7 +23,7 @@ de Chile para completar, corregir o estimar un valor. Si sabes que Valle Nevado
 está a 3.025 m, ese conocimiento no entra a la base.
 
 **Si un valor no se puede derivar, se escribe `NULL` y se registra la fila en
-`data/pendientes.csv` con el motivo.** Una celda vacía es un resultado válido y
+`data/vacios.csv` con el motivo.** Una celda vacía es un resultado válido y
 esperado. Una celda inventada invalida el catastro completo.
 
 ## Regla 2 — Procedencia por campo
@@ -71,7 +71,7 @@ ni para decidir qué es correcto cuando hay discrepancia.
 
 Cuando un tramo derivado coincida con un candidato de esa lista, se marca
 `en_lista_colega = TRUE`. Cuando un candidato no aparezca en el resultado
-derivado, se registra en `data/pendientes.csv` para revisión humana.
+derivado, se registra en `data/vacios.csv` para revisión humana.
 
 ---
 
@@ -94,7 +94,7 @@ Nunca se guarda una ruta completa como una sola fila.
 │   ├── raw/                    descargas intactas + manifest.json
 │   ├── interim/                productos intermedios (no se publican; se regeneran)
 │   ├── processed/
-│   └── pendientes.csv          todo lo que no se pudo derivar
+│   └── vacios.csv              todo lo que no se pudo derivar
 ├── src/
 │   ├── 01_descarga/
 │   ├── 02_segmentacion/
